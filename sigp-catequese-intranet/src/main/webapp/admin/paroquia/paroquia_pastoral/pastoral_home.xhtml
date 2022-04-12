@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="../../../template.xhtml">
+        <ui:define name="page_title">Pastorais da Paróquia</ui:define>
+        <ui:define name="page_breadcrumb_1"><i class="fa fa-indent"></i>Utilitários</ui:define>
+        <ui:define name="page_breadcrumb_2"><i class="entypo-layout"></i>Paróquia</ui:define>
+        <ui:define name="page_breadcrumb_3">Pastorais</ui:define>
+        <br/>
+        <ui:define name="center_content"> 
+            <h:panelGroup id="grupoPrincipal">
+                <h:form id="mainForm">
+                    <nav class="navbar navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="font-size: 128%;">Gerir Pastoral</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <p:commandLink class="menu-command-link" action="#{paroquiaPastoralBean.carregarEstatisticas()}" update=":componentes">
+                                        <i class="glyphicon glyphicon-stats" /> Estatísticas Por Pastoral 
+                                    </p:commandLink>
+                                </li>
+                                <li>
+                                    <p:commandLink class="menu-command-link" action="#{paroquiaPastoralBean.carregarLista(tipoListarBean.naoCarregarDadosBaseDados)}" update=":componentes">
+                                        <i class="glyphicon glyphicon-search"/> Pesquisar/Adicionar Pastoral 
+                                    </p:commandLink>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <p:messages id="messages" showDetail="false" closable="true" />
+                </h:form>
+                <h:panelGroup id="componentes">
+                    <ui:include src="pastoral_estatistica.xhtml"/>
+                    <ui:include src="pastoral_listar.xhtml"/>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

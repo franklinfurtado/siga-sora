@@ -1,0 +1,101 @@
+/**
+ *
+ * Importing others CSS files
+ *
+*/
+
+/* jquery-ui-1 files */
+@import "../js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css";
+
+/* font-icons */
+@import "vendors/font-icons/entypo/css/entypo.css";
+  
+@import "vendors/font-icons/font-awesome/css/font-awesome.css";
+
+/* bootstrap */
+@import "vendors/bootstrap.min.css";
+
+@import "vendors/bootstrap-grid.min.css";
+
+/* Neo Template files */
+@import "vendors/page-template/neon-template/neon-core.css";
+
+@import "vendors/page-template/neon-template/neon-theme.css";
+
+@import "vendors/page-template/neon-template/neon-forms.css";
+
+/* form-validation */
+@import "form-validation.css";
+
+/*
+ * Definicao do tipo de letra do projecto
+ */
+body, body .ui-widget {
+	font-family: Cambria !important;
+}
+
+.ui-dialog, .ui-widget, .ui-inputfield {
+	font-size: 100% !important;
+}
+
+/*
+ * tamanho e tipo de letra do caminho da funcionalidade atual
+ *    ex: Home / Catequese / Sacramentos da Catequese / Sacramentos
+ */
+.caminho_funcionalidade {
+	font-size: 140% !important;
+}
+
+/*
+ * classe para cor backgound azul do template
+ */
+.bgc-template-theme-blue {
+	background-color: #373e4a !important
+}
+
+/*
+ * aumentar a espessura das linhas do hr
+ */
+hr{
+	border-top: 1px solid #afafaf !important;
+}
+
+/*
+ * classe para o font-size 100%
+ */
+.font-size-100 {
+	font-size: 100% !important;
+}
+
+/*
+ * classe para o width/largura do componente 100%
+ */
+.width-100 {
+	width: 100% !important;
+}
+
+/*
+ * classe para o width/largura do componente 50%
+ */
+.width-50 {
+	width: 50% !important;
+}
+
+/*
+ * classe para float-right
+ */
+.float-right {
+	float: right !important;
+}
+
+/*
+ * classe para float-left
+ */
+.float-left {
+	float: left !important;
+}
+
+.text-underline{
+	text-decoration: underline  !important;
+}
+

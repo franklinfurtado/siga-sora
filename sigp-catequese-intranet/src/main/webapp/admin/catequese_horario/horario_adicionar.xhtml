@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition>
+	<p:dialog id="AdicionarDlg" closable="true" widgetVar="AdicionarDialog" modal="true" width="40%" resizable="false" appendTo="@(body)"
+		header="#{catequeseHorarioBean.entidade.novoRegisto ? 'Registar' : 'Editar'} Horário de Catequese">
+		<p:messages id="internalMessages" showDetail="false" />
+		<h:form id="AdicionarForm" rendered="#{catequeseHorarioBean.entidade != null}">
+			<h:panelGrid columns="1" styleClass="semBorda" style="width: 100%">
+				<p:outputLabel for="@next" value="Descrição do Horário" class="control-label" />
+				<p:inputText id="nome_horario" class="form-control" style="width:100%" value="#{catequeseHorarioBean.entidade.nomePeriodo}" />
+				<p:message for="nome_horario" style="width: 100%" />
+
+				<p:outputLabel for="@next" value="Dia da Semana" class="control-label" />
+				<p:selectOneMenu class="default-font-family" id="dia_semana" style="width:100%" value="#{catequeseHorarioBean.entidade.diaSemana}">
+					<f:selectItem itemLabel="Selecione o dia" itemValue="#{null}" />
+					<f:selectItems value="#{beanUtil.diasDaSemana}" var="item" itemValue="#{item}" itemLabel="#{item.value}" />
+				</p:selectOneMenu>
+				<p:message for="dia_semana" style="width: 100%" />
+
+				<h:panelGrid columns="2" style="width: 100%" id="groupHorariosInicioFim">
+					<h:panelGroup>
+						<p:outputLabel for="@next" value="Hora de Início" class="control-label" />
+						<p:inputMask id="hora_inicio" value="#{catequeseHorarioBean.entidade.horaInicio}" mask="99:99" style="width:95%"
+							styleClass="#{catequeseHorarioBean.styleClassForHoraInicioSuperiorHoraFim()}">
+							<f:convertDateTime pattern="HH:mm" type="localTime" />
+						</p:inputMask>
+						<p:message for="hora_inicio" style="width:100%; margin-left: -3%" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="@next" value="Hora de Fim" class="control-label" />
+						<p:inputMask id="hora_fim" value="#{catequeseHorarioBean.entidade.horaTermino}" mask="99:99" style="width:100%"
+							styleClass="#{catequeseHorarioBean.styleClassForHoraInicioSuperiorHoraFim()}">
+							<f:convertDateTime pattern="HH:mm" type="localTime" />
+						</p:inputMask>
+						<p:message for="hora_fim" style="width:100%" />
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:panelGrid>
+			<div class="modal-footer">
+				<p:commandLink class="btn btn-green btn-icon btn-lg" action="#{catequeseHorarioBean.gravar}" update="AdicionarForm">
+					<i class="entypo-check" /> #{catequeseHorarioBean.entidade.novoRegisto ? 'Registar' : 'Editar'}
+                    </p:commandLink>
+
+				<p:commandLink immediate="true" class="btn btn-default btn-icon btn-lg" action="#{catequeseHorarioBean.cancelarRegisto}" onclick="PF('AdicionarDialog').hide()">
+					<i class="entypo-cancel" /> Fechar
+                    </p:commandLink>
+
+				<p:commandLink rendered="#{!catequeseHorarioBean.entidade.novoRegisto}" class="btn btn-danger btn-icon btn-lg" update=":AdicionarForm:confirmarExclusao"
+					oncomplete="PF('confirmarExclusaoDialog').show();">
+					<i class="entypo-trash" /> Eliminar
+                    </p:commandLink>
+			</div>
+			<p:confirmDialog severity="none" width="40%" class="modal-footer" global="true" header="Confirmação de Exclusão de Horário de Catequese"
+				message="Deseja realmente excluir o horário '#{catequeseHorarioBean.entidade.nomePeriodo}'?" id="confirmarExclusao" widgetVar="confirmarExclusaoDialog">
+				<p:commandLink class="btn btn-danger btn-icon btn-lg" action="#{catequeseHorarioBean.excluir}"
+					oncomplete="PF('confirmarExclusaoDialog').hide();PF('AdicionarDialog').hide(); setTimeout(function(){$('[id$=messages]').hide(1);},4000);"
+					update=":mainForm:messages,:formListar:datalist">
+					<i class="entypo-trash" /> Sim
+                    </p:commandLink>
+
+				<p:commandLink class="btn btn-default btn-icon btn-lg" oncomplete="PF('confirmarExclusaoDialog').hide();">
+					<i class="entypo-cancel" /> Não
+                    </p:commandLink>
+			</p:confirmDialog>
+		</h:form>
+	</p:dialog>
+</ui:composition>
+</html>
+

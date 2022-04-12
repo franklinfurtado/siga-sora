@@ -1,0 +1,55 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 5, 2021, 8:38:59 PM
+    Author     : franklinfurtado
+*/
+
+
+/*alterar a cor da letra, tamanho e tipo de letra dos botoes*/
+.ui-commandlink{
+    font-size: 120% !important;
+    font-family: cambria !important;
+    color: white !important;
+    width: 100% !important;
+}
+
+/*alterar a cor para um tom cinza mais escuro do botao fechar/default quando passado por ele o cursor*/
+.btn-default:hover{
+    background-color: #8a8a90
+}
+
+/*alterar a cor para um tom cinza mais escuro do botao fechar/default*/
+.btn-default{
+    background-color: #b4b4b7
+}
+
+/*alterar a cor para um tom cinza mais escuro do icon botao fechar/default*/
+.btn-default.btn-icon i{
+    background-color: #8a8a90
+}
+
+/*alterar tamanho do icon dos botoes*/
+.btn.btn-icon i {
+    font-size: 100% !important;
+}
+
+/*alterar tamanho dos botoes do tipo xs das tabelas para adequar ao tamanho dos icons*/
+.ui-widget-content .btn-xs{
+    width: 66% !important;
+}
+
+.view-removed-element-list-link{
+	color: red !important;
+	text-decoration: underline !important;
+	font-size: 134% !important;
+	float: right !important;
+}
+
+.ui-datatable-data .ui-commandlink {
+	font-size: 100% !important;
+	width: 80% !important;
+}

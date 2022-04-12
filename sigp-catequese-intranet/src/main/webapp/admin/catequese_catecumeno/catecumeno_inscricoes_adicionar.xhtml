@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="../../template.xhtml">
+        <ui:define name="page_title">Registo de Nova Inscrição de Catecumeno</ui:define>
+        <ui:define name="page_breadcrumb_1"><i class="fa fa-indent"></i>Catequese</ui:define>
+        <ui:define name="page_breadcrumb_2"><i class="entypo-layout"></i>Catecumenos</ui:define>
+        <ui:define name="page_breadcrumb_3"><i class="fa fa-list-alt"></i>Inscriçōes de Catecumenos</ui:define>
+        <br/>
+        <ui:define name="center_content"> 
+            <h:panelGroup id="grupoPrincipal">
+                <h:form id="mainForm">
+                    <nav class="navbar navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="font-size: 128%;">Dados do Candidato</a>
+                        </div>
+                    </nav>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;" data-trigger="fileinput">
+                                    <p:graphicImage value="assets/images/ff-system/person-picture.jpeg"/>
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="min-width: 200px; min-height: 150px; max-height: 150px; max-width: 200px"></div>
+                                <div>
+                                    <span class="btn btn-white btn-file">
+                                        <span class="fileinput-new" style="font-size: 178% !important;">Selecione a Imagem</span>
+                                        <span class="fileinput-exists" style="font-size: 178% !important;">Alterar</span>
+                                        <input type="file" name="..." accept="image/*"/>
+                                    </span>
+                                    <a href="#" class="btn btn-orange fileinput-exists" data-dismiss="fileinput" style="font-size: 63% !important;">Remover</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-9" style="margin-left: -6%; width: 81%">
+                            <div class="col-sm-12">
+                                <p:outputLabel for="@next" value="Nome Completo" class="control-label"/>
+                                <p:inputText id="nome" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.nomeCompleto}" required="true" requiredMessage="Preencha este campo!!!"/>
+                                <p:message styleClass="ui-message-error-detail-undialog" for="nome"  />
+                            </div><br/>
+                            <div class="col-sm-4">
+                                <p:outputLabel for="@next" value="Data de Nascimento" class="control-label"/>
+                                <p:datePicker id="ano-nascimento" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.dataNascimento}"  showIcon="true" showButtonBar="true" mask="true" locale="de" monthNavigator="true" pattern="dd.MM.yyyy" required="true" requiredMessage="Preencha este campo!!!"/>
+                                <p:message styleClass="ui-message-error-detail-undialog" for="ano-nascimento" />
+                            </div>
+                            <div class="col-sm-4">
+                                <p:outputLabel for="@next" value="Nome do Pai" class="control-label"/>
+                                <p:inputText id="nome_pai" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.nomePai}"/>
+                                <p:message styleClass="ui-message-error-detail-undialog" for="nome_pai" style="width: 100%" />
+                            </div>
+                            <div class="col-sm-4">
+                                <p:outputLabel for="@next" value="Nome da Mãe" class="control-label"/>
+                                <p:inputText id="nome_mae" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.nomeMae}"/>
+                                <p:message styleClass="ui-message-error-detail-undialog" for="nome_mae" style="width: 100%" />
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <p:panel id="endereco" header="Endereço">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-3">
+                                    <p:outputLabel for="@next" value="Rua" class="control-label"/>
+                                    <p:inputText id="rua" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idEndereco.rua}"/>
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="rua" style="width: 100%" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <p:outputLabel for="@next" value="Bairro" class="control-label"/>
+                                    <p:inputText id="bairro" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idEndereco.bairro}"/>
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="bairro" style="width: 100%" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <p:outputLabel for="@next" value="Município" class="control-label"/>
+                                    <p:selectOneMenu id="municipio" style="width: 100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idEndereco.idDistrito.idMunicipio}" converter="municipioConverter">
+                                        <f:selectItem value="#{null}" itemLabel="Selecione"  />
+                                        <f:selectItems value="#{utilitarioEnderecoBean.listarMunicipioDeLuanda()}" var="item" itemValue="#{item}" itemLabel="#{item.nomeMunicipio}"/>
+                                        <p:ajax update="distrito"/>
+                                    </p:selectOneMenu> 
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="municipio" style="width: 100%" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <p:outputLabel for="@next" value="Distrito" class="control-label"/>
+                                    <p:selectOneMenu style="width: 100%" id="distrito" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idEndereco.idDistrito}" converter="distritoConverter">
+                                        <f:selectItem value="#{null}" itemLabel="Selecione"  />
+                                        <f:selectItems value="#{utilitarioEnderecoBean.listarDistritosPorMunicipio(catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idEndereco.idDistrito.idMunicipio.id)}" var="item" itemValue="#{item}" itemLabel="#{item.nomeDistrito}"/>
+                                    </p:selectOneMenu> 
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="distrito" style="width: 100%" />
+                                </div>
+                            </div>
+                        </div>
+                    </p:panel>
+
+                    <br/>
+
+                    <p:panel id="contactos" header="Contactos">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-4">
+                                    <p:outputLabel for="@next" value="Email" class="control-label"/>
+                                    <p:inputText id="email" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idContactos.email}"/>
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="email" style="width: 100%" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <p:outputLabel for="@next" value="Contacto Pessoal 1" class="control-label"/>
+                                    <p:inputMask mask="999-999-999" validateMask="true" id="contactoPessoal1" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idContactos.numeroTelefone1}"/>
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="contactoPessoal1" style="width: 100%" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <p:outputLabel for="@next" value="Contacto Pessoal 2" class="control-label"/>
+                                    <p:inputMask mask="999-999-999" validateMask="true" id="contactoPessoal2" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idContactos.numeroTelefone2}"/>
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="contactoPessoal2" style="width: 100%" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-4">
+                                    <p:outputLabel for="@next" value="Contacto de Emergência" class="control-label"/>
+                                    <p:inputMask mask="999-999-999" validateMask="true" id="contactoEmergencia1" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idContactos.telefoneContactoEmergencia1}"/>
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="contactoEmergencia1" style="width: 100%" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <p:outputLabel for="@next" value="Nome Contacto de Emergência" class="control-label"/>
+                                    <p:inputText id="nomeEmergencia1" class="form-control" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idContactos.nomeContactoEmergencia1}"/>
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="nomeEmergencia1" style="width: 100%" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <p:outputLabel for="@next" value="Grau de Parentesco" class="control-label"/>
+                                    <p:selectOneMenu id="grauParentesco" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idDadosPessoais.idContactos.grau_parentesco_contacto_emergencia1}">
+                                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                                        <f:selectItems value="#{beanUtil.grauParentescos}" var="item" itemValue="#{item}" itemLabel="#{item}"/>
+                                    </p:selectOneMenu>
+                                    <p:message styleClass="ui-message-error-detail-undialog" for="grauParentesco" style="width: 100%" />
+                                </div>
+                            </div>
+                        </div>
+                    </p:panel>
+
+                    <br/>
+
+                    <nav class="navbar navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="font-size: 128%;">Dados dos Sacramento</a>
+                        </div>
+                    </nav>
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-sm-3">
+                                <p:selectBooleanCheckbox value="#{catequeseCatecumenoIncricoesBean.entity.temBatismo}" itemLabel="Tem Batismo?">
+                                    <p:ajax update="@form"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="col-sm-3">
+                                <p:selectBooleanCheckbox value="#{catequeseCatecumenoIncricoesBean.entity.temComunhao}" itemLabel="Tem Comunhão?">
+                                    <p:ajax update="panel-dados-comunhao"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <h:panelGroup id="panel-dados-batismo">
+                                <h:panelGroup rendered="#{catequeseCatecumenoIncricoesBean.entity.temBatismo}">
+                                    <div class="col-sm-3">
+                                        <p:outputLabel for="@next" value="Igreja Batismo" class="control-label"/>
+                                        <p:autoComplete id="igrejaBatismo" value="#{catequeseCatecumenoIncricoesBean.entity.paroquiaBatismo}" completeMethod="#{paroquiaBean.listarNomesParoquias()}" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p:outputLabel for="@next" value="Data de Batismo" class="control-label"/>
+                                        <p:datePicker id="dataBatismo" styleClass="ui-inputfield-undialog p-datepicker" value="#{catequeseCatecumenoIncricoesBean.entity.dataBatismo}"  showIcon="true" showButtonBar="true" mask="true" locale="de" monthNavigator="true" pattern="dd.MM.yyyy"/>
+                                    </div>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <h:panelGroup id="panel-dados-comunhao">
+                                <h:panelGroup rendered="#{catequeseCatecumenoIncricoesBean.entity.temComunhao}">
+                                    <div class="col-sm-3">
+                                        <p:outputLabel for="@next" value="Igreja Comunhão" class="control-label"/>
+                                        <p:autoComplete id="igrejaComunhao" value="#{catequeseCatecumenoIncricoesBean.entity.paroquiaComunhao}" completeMethod="#{paroquiaBean.listarNomesParoquias()}" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p:outputLabel for="@next" value="Data da Comunhão" class="control-label"/>
+                                        <p:datePicker id="dataComunhao" styleClass="ui-inputfield-undialog p-datepicker" value="#{catequeseCatecumenoIncricoesBean.entity.dataComunhao}"  showIcon="true" showButtonBar="true" mask="true" locale="de" monthNavigator="true" pattern="dd.MM.yyyy"/>
+                                    </div>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <nav class="navbar navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" style="font-size: 128%;">Dados da Catequese</a>
+                        </div>
+                    </nav>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p:outputLabel for="@next" value="Etapa da Catequese" class="control-label"/>
+                            <p:selectOneMenu id="etapa" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idEtapaCatequese}" converter="etapaCatequeseConverter"  required="true" requiredMessage="Preencha este campo!!!">
+                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                                <f:selectItems value="#{catequeseEtapaBean.listEtapaCatequeses}" var="item" itemValue="#{item}" itemLabel="#{item.nomeEtapa}"/>
+                            </p:selectOneMenu>
+                            <p:message styleClass="ui-message-error-detail-undialog" for="etapa" style="width: 100%" />
+                        </div>
+                        <div class="col-sm-4">
+                            <p:outputLabel for="@next" value="Centro de Preferencial" class="control-label"/>
+                            <p:selectOneMenu id="centro1" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idCentroCatequesePreferencial}" converter="centroCatequeseConverter" required="true" requiredMessage="Preencha este campo!!!">
+                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                                <f:selectItems value="#{catequeseEtapaBean.listEtapaCatequeses}" var="item" itemValue="#{item}" itemLabel="#{item.nomeEtapa}"/>
+                            </p:selectOneMenu>
+                            <p:message styleClass="ui-message-error-detail-undialog" for="centro1" style="width: 100%" />
+                        </div>
+                        <div class="col-sm-4">
+                            <p:outputLabel for="@next" value="Centro de Alternativo" class="control-label"/>
+                            <p:selectOneMenu id="centro2" style="width:100%" value="#{catequeseCatecumenoIncricoesBean.entity.idCentroCatequeseAlternativo}" converter="centroCatequeseConverter" required="true" requiredMessage="Preencha este campo!!!">
+                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                                <f:selectItems value="#{catequeseEtapaBean.listEtapaCatequeses}" var="item" itemValue="#{item}" itemLabel="#{item.nomeEtapa}"/>
+                            </p:selectOneMenu>
+                            <p:message styleClass="ui-message-error-detail-undialog" for="centro2" style="width: 100%" />
+                        </div>
+                    </div>
+
+                    <div  class="modal-footer">
+                        <p:commandLink class="btn btn-green btn-icon btn-lg" action="#{catequeseCatecumenoIncricoesBean.gravar}" update="mainForm">
+                            <i class="entypo-check"/> #{catequeseCatecumenoIncricoesBean.entity.id == null ? 'Registar' : 'Editar'}
+                        </p:commandLink>
+
+                        <p:commandLink immediate="true" class="btn btn-default btn-icon btn-lg" action="pretty:catecumeno_listar">
+                            <i class="entypo-cancel"/> Cancelar
+                        </p:commandLink>
+
+                        <p:commandLink rendered="#{catequeseCatecumenoIncricoesBean.entity.id != null}" class="button button-font btn btn-danger btn-lg btn-icon icon-left person-danger-buttom-undialog" actionListener="#{catequeseCatecumenoIncricoesBean.verificaExclusao(catequeseCatecumenoIncricoesBean.entity)}"
+                                       oncomplete="setTimeout(function(){$('[id$=messages]').hide(1);},8000);">
+                            <i class="entypo-trash"/> Eliminar
+                        </p:commandLink>
+                    </div>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+
+    </ui:composition>
+</html>
+

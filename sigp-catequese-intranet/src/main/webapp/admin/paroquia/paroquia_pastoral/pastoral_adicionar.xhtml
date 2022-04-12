@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <p:dialog id="AdicionarDlg" closable="true" widgetVar="AdicionarDialog" modal="true" width="48%" resizable="false" appendTo="@(body)" header="#{paroquiaPastoralBean.entidade.novoRegisto ? 'Registar' : 'Editar'} Pastoral">
+            <p:messages id="internalMessages" showDetail="false"/>
+            <h:form id="AdicionarForm" rendered="#{paroquiaPastoralBean.entidade != null}">
+                <h:panelGrid  columns="1" styleClass="semBorda"  style="width: 100%">
+                    <p:outputLabel for="nome_pastoral" value="Nome da Pastoral" class="control-label"/>
+                    <p:inputText id="nome_pastoral" class="form-control" value="#{paroquiaPastoralBean.entidade.nomePastoral}"/>
+                    <p:message for="nome_pastoral"/>
+
+                    <p:outputLabel for="nome_responsavel" value="Nome do Responsável:" class="control-label"/>
+                    <h:panelGroup id="nome_responsavel_panel">
+                        <p:inputText id="nome_responsavel" value="#{paroquiaPastoralBean.entidade.nomeResonsavel}" styleClass="#{paroquiaPastoralBean.styleClassForRequiredNomeCoordenador()}" />
+                    </h:panelGroup>
+
+                    <p:selectBooleanCheckbox value="#{paroquiaPastoralBean.entidade.isCatequista}" itemLabel="É Catequista?" style="float: right; margin-top: 5%"/>
+                </h:panelGrid> 
+                <div  class="modal-footer">
+                    <p:commandLink class="btn btn-green btn-icon btn-lg" action="#{paroquiaPastoralBean.gravar}" update="AdicionarForm">
+                        <i class="entypo-check"/> #{paroquiaPastoralBean.entidade.novoRegisto ? 'Registar' : 'Editar'}
+                    </p:commandLink>
+
+                    <p:commandLink immediate="true" class="btn btn-default btn-icon btn-lg" action="#{paroquiaPastoralBean.cancelarRegisto}" onclick="PF('AdicionarDialog').hide()">
+                        <i class="entypo-cancel"/> Fechar
+                    </p:commandLink>
+
+                    <p:commandLink rendered="#{!paroquiaPastoralBean.entidade.novoRegisto}" class="btn btn-danger btn-icon btn-lg" update=":AdicionarForm:confirmarExclusao"
+                                   oncomplete="PF('confirmarExclusaoDialog').show();">
+                        <i class="entypo-trash"/> Eliminar
+                    </p:commandLink>
+                </div>
+                <p:confirmDialog severity="none" class="modal-footer" width="33%" global="true" header="Confirmação de Exclusão de Pastoral"  message="Deseja realmente excluir a pastoral #{paroquiaPastoralBean.entidade.nomePastoral}?" id="confirmarExclusao" widgetVar="confirmarExclusaoDialog">
+                    <p:commandLink class="btn btn-danger btn-icon btn-lg" action="#{paroquiaPastoralBean.excluir}" oncomplete="PF('confirmarExclusaoDialog').hide(); PF('AdicionarDialog').hide(); setTimeout(function(){$('[id$=messages]').hide(1);},4000);" update=":mainForm:messages,:formListar:datalist">
+                        <i class="entypo-trash"/> Sim
+                    </p:commandLink>
+
+                    <p:commandLink class="btn btn-default btn-icon btn-lg" oncomplete="PF('confirmarExclusaoDialog').hide();">
+                        <i class="entypo-cancel"/> Não
+                    </p:commandLink>
+                </p:confirmDialog>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
+

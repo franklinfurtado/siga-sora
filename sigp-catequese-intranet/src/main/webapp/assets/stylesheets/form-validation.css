@@ -1,0 +1,25 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 5, 2021, 10:58:53 AM
+    Author     : franklinfurtado
+*/
+
+.ui-message-error{
+    width: 100% !important;
+    color: red !important;
+    margin-left: 0% !important;
+}
+
+.ui-message-error-icon{
+    color: red !important;
+    float: right !important;
+}
+
+.ui-message-error-detail{
+    float: right !important;
+    margin-right: 1%;
+}

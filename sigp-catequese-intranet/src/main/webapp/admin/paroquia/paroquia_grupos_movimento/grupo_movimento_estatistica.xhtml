@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition>
+	<h:panelGroup rendered="#{paroquiaPastoralBean.mostrarEstatisticas}">
+		<h2>Estatísticas Por Grupos e Movimentos</h2>
+		<hr />
+		<h:form id="formEstatistica">
+			<p:growl>
+				<p:autoUpdate />
+			</p:growl>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-primary" data-collapsed="0">
+						<div class="panel-heading">
+							<div class="panel-title"
+								style="text-align: center; font-size: 116%;">Pesquisas</div>
+						</div>
+						<div class="panel-body">
+							<div class="col-md-2">
+								<p:outputLabel value="Ano Letivo" class="control-label" />
+							</div>
+							<div class="col-md-3">
+								<p:selectCheckboxMenu style="width:100%;"
+									value="#{catequeseAnoLetivoBean.listaAnoLetivoSelecionado}"
+									filter="true" filterMatchMode="startsWith" multiple="true">
+									<f:selectItems
+										value="#{catequeseAnoLetivoBean.listaAnoLetivos}" var="item"
+										itemLabel="#{item.ano}" />
+								</p:selectCheckboxMenu>
+							</div>
+							<h:outputLabel for="multiple" value="Multiple:" />
+							<p:selectCheckboxMenu id="multiple"
+								value="#{catequeseAnoLetivoBean.listaAnoLetivoSelecionado}"
+								multiple="true" filter="true" filterMatchMode="startsWith"
+								panelStyle="width:250px">
+								<f:selectItems value="#{catequeseAnoLetivoBean.listaAnoLetivos}"
+									var="item" itemLabel="#{item.ano}" itemValue="#{item}" />
+							</p:selectCheckboxMenu>
+
+							<p:outputLabel for="@next" value="Basic:" />
+							<p:selectOneMenu style="width:125px"
+								value="#{catequeseAnoLetivoBean.catequeseAnoLetivo}"
+								converter="anoLetivoConverter">
+								<f:selectItem itemLabel="Select One" itemValue="#{null}" />
+								<f:selectItems value="#{catequeseAnoLetivoBean.listaAnoLetivos}"
+									var="item" itemValue="#{item}" />
+							</p:selectOneMenu>
+
+							<div class="col-md-3">
+								<h:commandLink
+									class="button button-font btn btn-info btn-lg btn-icon icon-left person-info-buttom"
+									action="#{catequeseAnoLetivoBean.mm()}">
+									<i class="entypo-check" /> Pesquisar
+                                    </h:commandLink>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-primary" data-collapsed="0">
+						<div class="panel-heading">
+							<div class="panel-title"
+								style="text-align: center; font-size: 116%;">Lista de
+								Pastorais Registadas no Sistema</div>
+						</div>
+						<div class="panel-body">
+							<p:dataTable value="#{paroquiaPastoralBean.lista}"
+								var="item" paginator="true" paginatorPosition="bottom"
+								rowKey="#{item.idPastora}" rows="5"
+								emptyMessage="Nenhuma pastoral encontrada"
+								rowsPerPageTemplate="10,20,50,100,200"
+								widgetVar="pastoralListar"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+								<p:column sortBy="#{item.nomePastoral}"
+									filterBy="#{item.nomePastoral}" filterMatchMode="contains"
+									headerText="Nome Pastoral" style="width: 20%">
+									<h:outputText value="#{item.nomePastoral}" />
+								</p:column>
+
+								<p:column sortBy="#{item}" filterBy="#{item}"
+									filterMatchMode="contains" headerText="Total Catequistas"
+									style="width: 16%">
+									<h:outputText
+										value="#{paroquiaPastoralBean.getTotalCatequistaPastoral(item)}" />
+								</p:column>
+
+								<p:column sortBy="#{item}" filterBy="#{item}"
+									filterMatchMode="contains" headerText="Total Catecumenos"
+									style="width: 17%">
+									<h:outputText
+										value="#{paroquiaPastoralBean.getTotalCatecumenoPastoral(item)}" />
+								</p:column>
+							</p:dataTable>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="panel panel-primary" data-collapsed="0">
+						<div class="panel-heading">
+							<div class="panel-title"
+								style="text-align: center; font-size: 116%;">Total de
+								Catequistas e Catecumenos Por Pastoral</div>
+						</div>
+						<div class="panel-body">
+							<p:barChart id="totalPorPastoral"
+								model="#{paroquiaPastoralBean.barChartModel}" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-primary" data-collapsed="0">
+						<div class="panel-heading">
+							<div class="panel-title"
+								style="text-align: center; font-size: 116%;">Percentual de
+								Catecumenos Por Pastoral</div>
+						</div>
+						<div class="panel-body">
+							<p:donutChart id="percentualPorCatecumenos"
+								model="#{paroquiaPastoralBean.donutModel}" />
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="panel panel-primary" data-collapsed="0">
+						<div class="panel-heading">
+							<div class="panel-title"
+								style="text-align: center; font-size: 116%;">Percentual de
+								Catequistas Por Pastoral</div>
+						</div>
+						<div class="panel-body">
+							<p:donutChart id="percentualPorCatequistas"
+								model="#{paroquiaPastoralBean.donutModel}" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</h:panelGroup>
+</ui:composition>
+</html>
+

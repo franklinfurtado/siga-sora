@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="../../../template.xhtml">
+        <ui:define name="page_title">Grupos e Movimentos da Paróquia</ui:define>
+        <ui:define name="page_breadcrumb_1"><i class="fa fa-indent"></i>Utilitários</ui:define>
+        <ui:define name="page_breadcrumb_2"><i class="entypo-layout"></i>Paróquia</ui:define>
+        <ui:define name="page_breadcrumb_3">Grupos e Movimentos</ui:define>
+        <br/>
+        <ui:define name="center_content"> 
+            <h:panelGroup id="grupoPrincipal">
+                <h:form id="mainForm">
+                    <nav class="navbar navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="font-size: 128%;">Gerir Grupo e Movimento</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <p:commandLink class="menu-command-link" action="#{paroquiaGrupoMovimentoBean.carregarEstatisticas()}" update=":componentes">
+                                        <i class="glyphicon glyphicon-stats" /> Estatísticas Por Grupo/Movimento 
+                                    </p:commandLink>
+                                </li>
+                                <li>
+                                    <p:commandLink class="menu-command-link" action="#{paroquiaGrupoMovimentoBean.carregarListaVO(tipoListarBean.naoCarregarDadosBaseDados)}" update=":componentes">
+                                        <i class="glyphicon glyphicon-search"/> Pesquisar/Adicionar Grupo ou Movimento 
+                                    </p:commandLink>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <p:messages id="messages" showDetail="false" closable="true" />
+                </h:form>
+                <h:panelGroup id="componentes">
+                    <ui:include src="grupo_movimento_estatistica.xhtml"/>
+                    <ui:include src="grupo_movimento_listar.xhtml"/>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,425 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../../template.xhtml">
+	<ui:define name="page_title">Ficha de Registo de Catequista</ui:define>
+	<ui:define name="page_breadcrumb_1">
+		<i class="fa fa-indent"></i>  Catequese</ui:define>
+	<ui:define name="page_breadcrumb_2">
+		<i class="entypo-layout"></i> Catequistas</ui:define>
+	<ui:define name="page_breadcrumb_3">
+		<i class="fa fa-list-alt"></i>  Registo de Catequistas</ui:define>
+	<ui:define name="center_content">
+		<h:panelGroup id="grupoPrincipal">
+			<h:form id="mainForm" enctype="multipart/form-data">
+				<p:focus context="panel" />
+
+				<hr />
+				<f:metadata>
+					<f:viewAction action="#{catequeseCatequistaBean.carregarFichaSavalEditar}" />
+				</f:metadata>
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<p:commandLink rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and !catequeseCatequistaBean.entidade.apagado}"
+								class="btn btn-primary btn-icon btn-sm breadcrumb-button" action="#{navegacaoPaginasCatequistaBean.verFichaRegistoNovo}">
+								<i class="entypo-user-add" /> Novo Registo
+	                 		</p:commandLink>
+						</div>
+						<div class="col-sm-3">
+							<p:commandLink rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and !catequeseCatequistaBean.entidade.apagado}"
+								class="btn btn-orange btn-icon btn-sm breadcrumb-button" action="#{catequeseCatequistaBean.prepararEditarRegisto}" update="mainForm">
+								<i class="entypo-pencil" /> Editar Dados
+                        	</p:commandLink>
+						</div>
+						<div class="col-sm-3">
+							<p:commandLink immediate="true" rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and catequeseCatequistaBean.entidade.apagado}"
+								class="btn btn-green btn-icon btn-sm breadcrumb-button" action="#{catequeseCatequistaBean.recuperarUnico}">
+								<i class="pi pi-undo" /> Recuperar Registo
+                        	</p:commandLink>
+						</div>
+						<div class="col-sm-4">
+							<p:commandLink rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and catequeseCatequistaBean.entidade.apagado}"
+								class="btn btn-danger btn-icon btn-sm breadcrumb-button" action="#{catequeseCatequistaBean.excluirPermanenteUnico}">
+								<i class="pi pi-trash" /> Eliminar Permanentemente
+                        	</p:commandLink>
+						</div>
+						<div class="col-sm-2 float-right">
+							<p:commandLink class="btn btn-default btn-icon btn-sm breadcrumb-button" action="#{navegacaoPaginasCatequistaBean.verListaAtivos}"
+								rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and catequeseCatequistaBean.entidade.apagado}" immediate="true">
+								<i class="pi pi-arrow-right" /> Voltar
+                   		 	</p:commandLink>
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<nav class="navbar navbar-light bgc-template-theme-blue bg-gradient">
+					<div class="container-fluid">
+						<span class="navbar-brand mb-0 h2 text-white">Dados do Catequista</span>
+					</div>
+				</nav>
+
+				<br />
+
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<h:panelGroup class="row" id="panel">
+								<div class="col-sm-12">
+									<div class="col-sm-12">
+										<p:outputLabel for="@next" value="Nome Completo" class="control-label" />
+										<p:inputText disabled="#{catequeseCatequistaBean.naoEditar()}" id="nome" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.nomeCompleto}" />
+										<p:message for="nome" />
+									</div>
+								</div>
+								<br />
+								<div class="col-4">
+									<div>
+										<p:outputLabel for="@next" value="Data de Nascimento" class="control-label" />
+										<p:datePicker disabled="#{catequeseCatequistaBean.naoEditar()}" id="ano-nascimento" value="#{catequeseCatequistaBean.entidade.idDadosPessoais.dataNascimento}"
+											mask="true" locale="de" maxdate="#{beanUtil.dataMax()}" monthNavigator="true" yearNavigator="true" pattern="dd.MM.yyyy"
+											validatorMessage="Data de nascimento inválida" />
+										<p:message for="ano-nascimento" />
+									</div>
+								</div>
+								<div class="col-4">
+									<div>
+										<p:outputLabel for="@next" value="Nome do Pai" class="control-label" />
+										<p:inputText disabled="#{catequeseCatequistaBean.naoEditar()}" id="nome_pai" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.nomePai}" />
+										<p:message for="nome_pai" />
+									</div>
+								</div>
+								<div class="col-4">
+									<div>
+										<p:outputLabel for="@next" value="Nome da Mãe" class="control-label" />
+										<p:inputText disabled="#{catequeseCatequistaBean.naoEditar()}" id="nome_mae" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.nomeMae}" />
+										<p:message for="nome_mae" />
+									</div>
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<nav class="navbar navbar-light bgc-template-theme-blue bg-gradient">
+					<div class="container-fluid">
+						<span class="navbar-brand mb-0 h2 text-white">Endereço</span>
+					</div>
+				</nav>
+
+				<br />
+
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<div class="row">
+								<div class="col-3">
+									<div>
+										<p:outputLabel for="@next" value="Rua" class="control-label" />
+										<p:inputText disabled="#{catequeseCatequistaBean.naoEditar()}" id="rua" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idEndereco.rua}" />
+										<p:message for="rua" />
+									</div>
+								</div>
+								<div class="col-3">
+									<div>
+										<p:outputLabel for="@next" value="Bairro" class="control-label" />
+										<p:inputText disabled="#{catequeseCatequistaBean.naoEditar()}" id="bairro" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idEndereco.bairro}" />
+										<p:message for="bairro" />
+									</div>
+								</div>
+								<div class="col-3">
+									<div>
+										<p:outputLabel for="@next" value="Município" class="control-label" />
+										<p:selectOneMenu disabled="#{catequeseCatequistaBean.naoEditar()}" id="municipio" class="width-100" dynamic="true" filter="true" filterMatchMode="startsWith"
+											effect="fade" value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idEndereco.idMunicipio}" converter="municipioConverter">
+											<f:selectItem value="#{null}" itemLabel="Selecione" />
+											<f:selectItems value="#{utilitarioEnderecoBean.listarMunicipioDeLuanda()}" var="item" itemValue="#{item}" itemLabel="#{item.nomeMunicipio}" />
+											<p:ajax update="distrito" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="col-3">
+									<div>
+										<p:outputLabel for="@next" value="Distrito" class="control-label" />
+										<p:selectOneMenu disabled="#{catequeseCatequistaBean.naoEditar()}" class="width-100" id="distrito" filter="true" filterMatchMode="startsWith" effect="fade"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idEndereco.idDistrito}" converter="distritoConverter">
+											<f:selectItem value="#{null}" itemLabel="Selecione" />
+											<f:selectItems value="#{utilitarioEnderecoBean.listarDistritosPorMunicipio(catequeseCatequistaBean.entidade.idDadosPessoais.idEndereco.idMunicipio.id)}"
+												var="item" itemValue="#{item}" itemLabel="#{item.nomeDistrito}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<nav class="navbar navbar-light bgc-template-theme-blue bg-gradient">
+					<div class="container-fluid">
+						<span class="navbar-brand mb-0 h2 text-white">Contactos</span>
+					</div>
+				</nav>
+
+				<br />
+
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<div class="row">
+								<div class="col-4">
+									<div>
+										<p:outputLabel for="@next" value="Email" class="control-label" />
+										<p:inputText disabled="#{catequeseCatequistaBean.naoEditar()}" id="email" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.email}" />
+										<p:message for="email" />
+									</div>
+								</div>
+								<div class="col-4">
+									<div>
+										<p:outputLabel for="@next" value="Contacto Pessoal 1" class="control-label" />
+										<p:inputMask disabled="#{catequeseCatequistaBean.naoEditar()}" mask="999-999-999" validateMask="true" id="contactoPessoal1" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.numeroTelefone1}" />
+									</div>
+								</div>
+								<div class="col-4">
+									<div>
+										<p:outputLabel for="@next" value="Contacto Pessoal 2" class="control-label" />
+										<p:inputMask disabled="#{catequeseCatequistaBean.naoEditar()}" mask="999-999-999" validateMask="true" id="contactoPessoal2" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.numeroTelefone2}" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-4">
+									<div>
+										<p:outputLabel for="@next" value="Contacto de Emergência" class="control-label" />
+										<p:inputMask disabled="#{catequeseCatequistaBean.naoEditar()}" mask="999-999-999" validateMask="true" id="contactoEmergencia1" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.telefoneContactoEmergencia1}" />
+									</div>
+								</div>
+								<div class="col-4">
+									<div>
+										<p:outputLabel for="@next" value="Nome do Contacto de Emergência" class="control-label" />
+										<p:inputText disabled="#{catequeseCatequistaBean.naoEditar()}" id="nomeEmergencia1" class="form-control width-100"
+											value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.nomeContactoEmergencia1}" />
+										<p:message for="nomeEmergencia1" />
+									</div>
+								</div>
+								<div class="col-4">
+									<div>
+										<p:outputLabel for="@next" value="Grau de Parentesco" class="control-label" />
+										<p:selectOneMenu disabled="#{catequeseCatequistaBean.naoEditar()}" id="grauParentesco" class="width-100" dynamic="true" filter="true" filterMatchMode="startsWith"
+											effect="fade" value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.grau_parentesco_contacto_emergencia1}">
+											<f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+											<f:selectItems value="#{beanUtil.grauParentescos}" var="item" itemValue="#{item}" itemLabel="#{item}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<br />
+
+				<nav class="navbar navbar-light bgc-template-theme-blue bg-gradient">
+					<div class="container-fluid">
+						<span class="navbar-brand mb-0 h2 text-white">Dados Paroquiais</span>
+					</div>
+				</nav>
+
+				<br />
+
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<div class="row">
+								<p:outputLabel value="Grupo ou Movimento a que pertence na paroquia" class="control-label text-underline" />
+								<div class="row">
+									<div class="col-sm-4">
+										<div>
+											<p:outputLabel for="@next" value="Pastoral" class="control-label" />
+											<p:selectOneMenu style="width:100%" filter="true" filterMatchMode="startsWith" effect="fade" converter="paroquiaPastoralConverter"
+												value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idPastoral}" disabled="#{catequeseCatequistaBean.naoEditar()}">
+												<f:selectItem value="#{null}" itemLabel="Selecione" />
+												<f:selectItems value="#{paroquiaPastoralBean.listarTodos}" var="item" itemValue="#{item}" itemLabel="#{item.nomePastoral}" />
+												<p:ajax update="grupoMovimento" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div>
+											<p:outputLabel for="@next" value="Grupo ou Movimento" class="control-label" />
+											<p:selectOneMenu style="width:100%" filter="true" filterMatchMode="startsWith" effect="fade" id="grupoMovimento" converter="paroquiaGrupoMovimentoConverter"
+												value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idGrupoMovimento}" disabled="#{catequeseCatequistaBean.naoEditar()}">
+												<f:selectItem value="#{null}" itemLabel="Selecione" />
+												<f:selectItems var="item" itemValue="#{item}" itemLabel="#{item.nome}"
+													value="#{paroquiaGrupoMovimentoBean.listaPorPastoral(catequeseCatequistaBean.entidade.idDadosPessoais.idPastoral.id)}" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br />
+							<p:separator />
+							<br />
+							<h:panelGroup class="row" id="dadoTabela">
+								<div class="col-3">
+									<div>
+										<p:outputLabel for="@next" value="Sacramento" class="control-label" />
+										<p:selectOneMenu disabled="#{catequeseCatequistaBean.naoEditar()}" class="width-100" id="sacramentos" filter="true" filterMatchMode="startsWith" effect="fade"
+											value="#{catequeseCatequistaBean.catequistaSacramento.idSacramento}" converter="sacramentoConverter">
+											<f:selectItem value="#{null}" itemLabel="Selecione" />
+											<f:selectItems value="#{catequeseSacramentoBean.listaSacramentos}" var="item" itemValue="#{item}" itemLabel="#{item.nomeSacramento}" />
+											<p:ajax update="adicionaSacramentoBtn" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="col-3">
+									<div>
+										<p:outputLabel for="@next" value="Igreja onde recebeu" class="control-label" />
+										<p:autoComplete disabled="#{catequeseCatequistaBean.naoEditar()}" id="igrejaBatismo" value="#{catequeseCatequistaBean.catequistaSacramento.paroquia}"
+											completeMethod="#{paroquiaBean.listarNomesParoquias()}" />
+									</div>
+								</div>
+								<div class="col-3">
+									<div>
+										<p:outputLabel for="@next" value="Data" class="control-label" />
+										<p:datePicker disabled="#{catequeseCatequistaBean.naoEditar()}" id="dataBatismo" class="form-control" styleClass="ui-inputfield-undialog p-datepicker"
+											value="#{catequeseCatequistaBean.catequistaSacramento.dataConclusaoSacramento}" showButtonBar="true" mask="true" locale="de" monthNavigator="true"
+											pattern="dd.MM.yyyy" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div>
+										<p:commandLink disabled="#{catequeseCatequistaBean.naoEditar() or empty catequeseCatequistaBean.catequistaSacramento.idSacramento}" class="btn btn-primary btn-icon btn-sm breadcrumb-button"
+											id="adicionaSacramentoBtn" action="#{catequeseCatequistaBean.adicionarSacramentoAoCatequista()}" update="sacramentosList" process="dadoTabela" style="margin-top:15.5%">
+											<i class="entypo-check" /> Adicionar Sacramento
+				                 		</p:commandLink>
+									</div>
+								</div>
+							</h:panelGroup>
+							<br />
+							<div class="row">
+								<h:panelGroup id="sacramentosList">
+									<p:dataTable var="item" id="listaSacramento" value="#{catequeseCatequistaBean.entidade.catequistaSacramentos}" editable="true" editMode="cell"
+										emptyMessage="Nenhum registo encontrado">
+
+										<p:column headerText="Nome Sacramento">
+											<h:outputText value="#{item.idSacramento.nomeSacramento}" />
+										</p:column>
+
+										<p:column headerText="Local/Igreja" responsivePriority="3">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{item.paroquia}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:autoComplete disabled="#{catequeseCatequistaBean.naoEditar()}" id="igrejaBatismo" value="#{item.paroquia}"
+														completeMethod="#{paroquiaBean.listarNomesParoquias()}" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="Data" responsivePriority="2">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{item.dataConclusaoSacramento}">
+														<f:convertDateTime pattern="dd.MM.yyyy" type="localDateTime" />
+													</h:outputText>
+												</f:facet>
+												<f:facet name="input">
+													<p:datePicker disabled="#{catequeseCatequistaBean.naoEditar()}" id="dataBatismo" class="form-control" styleClass="ui-inputfield-undialog p-datepicker"
+														value="#{item.dataConclusaoSacramento}" showButtonBar="true" mask="true" locale="de" monthNavigator="true" pattern="dd.MM.yyyy" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column>
+											<p:commandLink class="button button-font btn btn-danger btn-icon btn-sm breadcrumb-button" disabled="#{catequeseCatequistaBean.naoEditar()}"
+												action="#{catequeseCatequistaBean.removerSacramentoAoCatequista(item)}" update="listaSacramento">
+												<i class="entypo-trash" /> Remover
+				                       		</p:commandLink>
+										</p:column>
+									</p:dataTable>
+								</h:panelGroup>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<hr />
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<p:commandLink rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and !catequeseCatequistaBean.entidade.apagado}"
+								class="btn btn-primary btn-icon btn-sm breadcrumb-button" action="#{navegacaoPaginasCatequistaBean.verFichaRegistoNovo}">
+								<i class="entypo-user-add" /> Novo Registo
+                   			</p:commandLink>
+						</div>
+						<div class="col-sm-3">
+							<p:commandLink disabled="#{catequeseCatequistaBean.naoEditar()}"
+								class="btn #{catequeseCatequistaBean.entidade.id == null ? 'btn-green' : 'btn-orange'} btn-icon  btn-sm breadcrumb-button"
+								action="#{catequeseCatequistaBean.gravar}" update="mainForm" validateClient="true">
+								<i class="entypo-check" /> Salvar
+		            		</p:commandLink>
+						</div>
+						<div class="col-sm-3">
+							<p:commandLink class="button button-font btn btn-danger btn-icon btn-sm breadcrumb-button"
+								rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and !catequeseCatequistaBean.entidade.apagado}" oncomplete="PF('confirmarExclusaoDialog').show();"
+								update=":mainForm:confirmarExclusao">
+								<i class="entypo-trash" /> Eliminar
+                       		</p:commandLink>
+						</div>
+						<div class="col-sm-3">
+							<p:commandLink class="btn btn-default btn-icon  btn-sm breadcrumb-button" action="#{navegacaoPaginasCatequistaBean.verListaAtivos}" immediate="true">
+								<i class="pi pi-arrow-right" /> #{catequeseCatequistaBean.entidade.id == null ? 'Cancelar' : 'Voltar'}
+							</p:commandLink>
+						</div>
+					</div>
+				</div>
+
+				<p:confirmDialog width="40%" global="true" header="Confirmação de Exclusão do Catequista"
+					message="Deseja realmente excluir a Catequista '#{catequeseCatequistaBean.entidade.nomeCompleto}'?" id="confirmarExclusao" widgetVar="confirmarExclusaoDialog">
+
+					<hr />
+
+					<div class="container">
+						<div class="row justify-content-md-center">
+							<div class="col-sm-3">
+								<p:commandLink class="btn btn-danger btn-icon btn-sm breadcrumb-button" action="#{catequeseCatequistaBean.excluir}"
+									oncomplete="PF('confirmarExclusaoDialog').hide();">
+									<i class="entypo-trash" /> Sim
+		                    	</p:commandLink>
+							</div>
+							<div class="col-sm-3">
+								<p:commandLink class="btn btn-default btn-icon btn-sm breadcrumb-button" oncomplete="PF('confirmarExclusaoDialog').hide();">
+									<i class="entypo-cancel" /> Não
+                    			</p:commandLink>
+							</div>
+						</div>
+					</div>
+				</p:confirmDialog>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+
+</ui:composition>
+</html>
+

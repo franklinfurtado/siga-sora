@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <p:dialog id="AdicionarDlg" closable="true" widgetVar="AdicionarDialog" modal="true" width="40%" resizable="false" appendTo="@(body)" header="#{catequeseEtapaBean.entidade.novoRegisto ? 'Registar' : 'Editar'} Etapa de Catequese">
+            <p:messages id="internalMessages" showDetail="false"/>
+            <h:form id="AdicionarForm" rendered="#{catequeseEtapaBean.entidade != null}">
+                <h:panelGrid  columns="1" styleClass="semBorda"  style="width: 100%">
+                    <p:outputLabel for="@next" value="Descrição do Etapa" class="control-label"/>
+                    <p:inputText id="nome_etapaCatequese" class="form-control" style="width:100%" value="#{catequeseEtapaBean.entidade.nomeEtapa}"/>
+                    <p:message for="nome_etapaCatequese" style="width: 100%" />
+
+                    <p:outputLabel for="anoLimite_etapaCatequese" value="Idade limete para inscrição na Etapa" class="control-label"/>
+                    <h:panelGrid columns="3">
+                        <p:outputLabel value="+ de " class="control-label"/>
+                        <p:inputText id="anoLimite_etapaCatequese" class="form-control" style="width:52%" value="#{catequeseEtapaBean.entidade.anoLimiteInscricao}"/>
+                        <p:outputLabel value="Anos de Idade" class="control-label" style="margin-left: -76%"/>
+                    </h:panelGrid>
+                    <p:outputLabel for="@next" value="Mês de aniversário limete para inscrição na Etapa" style="margin-top: 4%;" class="control-label"/>
+                    <p:selectOneMenu class="default-font-family" id="mesLimite_etapaCatequese" style="width:100%" value="#{catequeseEtapaBean.entidade.mesLimiteInscricao}">
+                        <f:selectItem itemLabel="Selecione o dia" itemValue="#{null}" />
+                        <f:selectItems value="#{beanUtil.mesesDoAno}" var="item" itemValue="#{item}" itemLabel="#{item}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid> 
+                <div  class="modal-footer">
+                    <p:commandLink class="btn btn-green btn-icon btn-lg" action="#{catequeseEtapaBean.gravar}" update="AdicionarForm">
+                        <i class="entypo-check"/> #{catequeseEtapaBean.entidade.novoRegisto ? 'Registar' : 'Editar'}
+                    </p:commandLink>
+
+                    <p:commandLink immediate="true" class="btn btn-default btn-icon btn-lg" action="#{catequeseEtapaBean.cancelarRegisto}" onclick="PF('AdicionarDialog').hide()">
+                        <i class="entypo-cancel"/> Fechar
+                    </p:commandLink>
+
+                    <p:commandLink rendered="#{catequeseEtapaBean.entidade.id != null}" class="btn btn-danger btn-icon btn-lg" update=":AdicionarForm:confirmarExclusao"
+                                   oncomplete="PF('confirmarExclusaoDialog').show();">
+                        <i class="entypo-trash"/> Eliminar
+                    </p:commandLink>
+                </div>
+                <p:confirmDialog severity="none" class="modal-footer" width="42%" global="true" header="Confirmação de Exclusão de Etapa de Catequese"  message="Deseja realmente excluir o sacramento '#{catequeseEtapaBean.entidade.nomeEtapa}'?" id="confirmarExclusao" widgetVar="confirmarExclusaoDialog">
+                    <p:commandLink class="btn btn-danger btn-icon btn-lg" action="#{catequeseEtapaBean.excluir}" oncomplete="PF('confirmarExclusaoDialog').hide(); PF('AdicionarDialog').hide(); setTimeout(function(){$('[id$=messages]').hide(1);},4000);" update=":mainForm:messages,:formListar:datalist">
+                        <i class="entypo-trash"/> Sim
+                    </p:commandLink>
+
+                    <p:commandLink class="btn btn-default btn-icon btn-lg" oncomplete="PF('confirmarExclusaoDialog').hide();">
+                        <i class="entypo-cancel"/> Não
+                    </p:commandLink>
+                </p:confirmDialog>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
+

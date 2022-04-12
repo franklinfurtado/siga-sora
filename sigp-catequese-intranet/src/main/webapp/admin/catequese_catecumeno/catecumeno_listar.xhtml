@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="../../template.xhtml">
+        <ui:define name="page_title">Lista de Catecumenos</ui:define>
+        <ui:define name="page_breadcrumb_1"><i class="fa fa-indent"></i>Catequese</ui:define>
+        <ui:define name="page_breadcrumb_2"><i class="entypo-layout"></i>Catecumenos</ui:define>
+        <ui:define name="page_breadcrumb_3">Lista de Catecumenos</ui:define>
+        <br/>
+        <ui:define name="center_content"> 
+            <h:panelGroup id="grupoPrincipal">
+                <h:form id="mainForm">
+                    <p:messages id="messages" showDetail="false" closable="true" />
+                    <nav class="navbar navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="font-size: 128%;">Lista de Catecumenos Registados no Sistema</a>
+                        </div>
+                    </nav>
+                    <h2>Pesquisar Catecumenos</h2>
+                    <hr/> 
+                    <p:commandLink class="button-font btn-lg btn-primary ff-large-button"  oncomplete="PF('AdicionarDialog').show();"
+                                   action="#{catequeseCatecumenoBean.prepararNovoRegisto}">
+                        <i class="glyphicon glyphicon-plus" /> Novo Registo
+                    </p:commandLink>
+                    <br/><br/>
+
+                    <p:dataTable id="datalist" value="#{catequeseCatecumenoBean.listCatecumenosCatequese}" var="item"
+                                 paginator="true" paginatorPosition="bottom" rowKey="#{item.idCatecumeno}"
+                                 rows="10" emptyMessage="Nenhum catecumeno encontrado"
+                                 widgetVar="listar"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registo(s)"
+                                 rowsPerPageTemplate="5,10,20,40,50,100,{ShowAll|'Todos'}"
+                                 >
+
+                        <p:column headerText="Código" style="width: 17%" sortBy="#{item.codigoCatecumeno}" filterBy="#{item.codigoCatecumeno}" filterMatchMode="contains">
+                            <h:outputText value="#{item.codigoCatecumeno}"/>
+                        </p:column>
+
+                        <p:column headerText="Nome" style="width: 17%" sortBy="#{item.idDadosPessoais.nomeCompleto}" filterBy="#{item.idDadosPessoais.nomeCompleto}" filterMatchMode="contains">
+                            <h:outputText value="#{item.idDadosPessoais.nomeCompleto}"/>
+                        </p:column>
+
+                        <p:column headerText="Data de Nascimento" style="width: 17%" sortBy="#{item.idDadosPessoais.dataNascimento}" filterBy="#{item.idDadosPessoais.dataNascimento}" filterMatchMode="contains">
+                            <h:outputText value="#{item.idDadosPessoais.dataNascimento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Telefone" style="width: 17%" sortBy="#{item.idDadosPessoais.idContactos.numeroTelefone1}" filterBy="#{item.idDadosPessoais.idContactos.numeroTelefone1}" filterMatchMode="contains">
+                            <h:outputText value="#{item.idDadosPessoais.idContactos.numeroTelefone1}"/>
+                        </p:column>
+
+                        <p:column headerText="Endereço" style="width: 17%" sortBy="#{enderecoBean.endereco(item.idDadosPessoais.idEndereco)}" filterBy="#{enderecoBean.endereco(item.idDadosPessoais.idEndereco)}" filterMatchMode="contains">
+                            <h:outputText value="#{enderecoBean.endereco(item.idDadosPessoais.idEndereco)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>
+

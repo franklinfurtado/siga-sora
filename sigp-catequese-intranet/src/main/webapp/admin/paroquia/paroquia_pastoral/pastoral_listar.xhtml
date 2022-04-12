@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <h:panelGroup rendered="#{!paroquiaPastoralBean.mostrarEstatisticas}">
+            <h2>Pesquisar Pastorais</h2>
+            <hr/> 
+            <h:form id="formListar">
+                <p:commandLink class="button-font btn-lg btn-primary ff-large-button" update=":AdicionarDlg" oncomplete="PF('AdicionarDialog').show();"
+                               action="#{paroquiaPastoralBean.prepararNovoRegisto}">
+                    <i class="glyphicon glyphicon-plus" /> Nova Pastoral
+                </p:commandLink>
+                <br/><br/>
+
+                <p:dataTable id="datalist" value="#{paroquiaPastoralBean.listarTodos}" var="item"
+                             paginator="true" paginatorPosition="bottom" rowKey="#{item.id}"
+                             rows="10" emptyMessage="Nenhuma pastoral encontrada"
+                             widgetVar="pastoralListar"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registo(s)"
+                             rowsPerPageTemplate="5,10,20,40,50,100,{ShowAll|'Todos'}"
+                             >
+
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column rowspan="2" headerText="Nome Pastoral" style="width: 17%" sortBy="#{item.nomePastoral}" filterBy="#{item.nomePastoral}" filterMatchMode="contains"/>
+                            <p:column colspan="2" headerText="Responsável:" />
+                            <p:column rowspan="2" headerText="Total Catequistas" style="width: 14%" sortBy="#{item.isCatequista}" filterBy="#{item.isCatequista}" filterMatchMode="contains"/>
+                            <p:column rowspan="2" headerText="Total Catecumenos" style="width: 15%" sortBy="#{item.isCatequista}" filterBy="#{item.isCatequista}" filterMatchMode="contains"/>
+                            <p:column rowspan="2" headerText="Opções" />
+                        </p:row>
+
+                        <p:row>
+                            <p:column headerText="Nome" style="width: 20%" sortBy="#{item.nomeResonsavel}" filterBy="#{item.nomeResonsavel}" filterMatchMode="contains"/>
+                            <p:column headerText="É Catequista?" style="width: 12%" sortBy="#{item.isCatequista}" filterBy="#{item.isCatequista ? 'Sim' : 'Não'}" filterMatchMode="contains"/>
+                        </p:row>
+                    </p:columnGroup>
+
+                    <p:column>
+                        <h:outputText value="#{item.nomePastoral}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{item.nomeResonsavel}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{item.informacaoCatequista}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="10"/>
+                        <p:commandLink style="margin-left: 19% !important" class="btn btn-info btn-icon btn-xs"  action="#{paroquiaPastoralBean.verCatequistas}">
+                            <i class="entypo-info"/> Ver
+                            <f:setPropertyActionListener value="#{item}" target="#{paroquiaPastoralBean.entidade}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="14"/>
+                        <p:commandLink style="margin-left: 19% !important" class="btn btn-info btn-icon btn-xs"  action="#{paroquiaPastoralBean.verCatecumenos}">
+                            <i class="entypo-info"/> Ver
+                            <f:setPropertyActionListener value="#{item}" target="#{paroquiaPastoralBean.pastoral}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column style="width: 33%;text-align: center">
+                        <p:commandLink class="btn btn-orange btn-icon btn-xs" update=":AdicionarDlg" oncomplete="PF('AdicionarDialog').show();">
+                            <i class="entypo-pencil"/> Editar
+                            <f:setPropertyActionListener value="#{item}" target="#{paroquiaPastoralBean.entidade}" />
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <h:panelGroup>
+                <ui:include src="pastoral_adicionar.xhtml"/>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+</html>
+

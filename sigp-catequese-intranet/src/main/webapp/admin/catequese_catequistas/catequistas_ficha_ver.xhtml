@@ -1,0 +1,306 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../../template.xhtml">
+	<ui:define name="page_title">Ficha de Cadastro de Catequista</ui:define>
+	<ui:define name="page_breadcrumb_1">
+		<i class="fa fa-indent"></i>  Catequese</ui:define>
+	<ui:define name="page_breadcrumb_2">
+		<i class="entypo-layout"></i> Catequistas</ui:define>
+	<ui:define name="page_breadcrumb_3">
+		<i class="fa fa-list-alt"></i>  Cadastro de Catequistas</ui:define>
+	<ui:define name="center_content">
+		<h:panelGroup id="grupoPrincipal">
+			<h:form id="mainForm">
+				<hr />
+				<f:metadata>
+					<f:viewAction action="#{catequeseCatequistaBean.carregarFichaVer}" />
+				</f:metadata>
+
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<p:commandLink rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and !catequeseCatequistaBean.entidade.apagado}"
+								class="btn btn-orange btn-icon btn-sm breadcrumb-button" action="#{navegacaoPaginasCatequistaBean.verFichaRegistoEditar(catequeseCatequistaBean.entidade.id)}">
+								<i class="entypo-pencil" /> Editar Dados
+                        	</p:commandLink>
+						</div>
+						<div class="col-sm-3">
+							<p:commandLink immediate="true" rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and catequeseCatequistaBean.entidade.apagado}"
+								class="btn btn-green btn-icon btn-sm breadcrumb-button" action="#{catequeseCatequistaBean.recuperarUnico}">
+								<i class="pi pi-undo" /> Recuperar Registo
+                        	</p:commandLink>
+						</div>
+						<div class="col-sm-4">
+							<p:commandLink rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and catequeseCatequistaBean.entidade.apagado}"
+								class="btn btn-danger btn-icon btn-sm breadcrumb-button" oncomplete="PF('confirmarExclusaoDialog').show();" update=":mainForm:confirmarExclusao">
+								<i class="pi pi-trash" /> Eliminar Permanentemente
+                        	</p:commandLink>
+						</div>
+						<div class="col-sm-2 float-right">
+							<p:commandLink class="btn btn-default btn-icon btn-sm breadcrumb-button" action="#{navegacaoPaginasCatequistaBean.verListaAtivos}"
+								rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and catequeseCatequistaBean.entidade.apagado}" immediate="true">
+								<i class="pi pi-arrow-right" /> Voltar
+                   		 	</p:commandLink>
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<nav class="navbar navbar-light bgc-template-theme-blue bg-gradient">
+					<div class="container-fluid">
+						<span class="navbar-brand mb-0 h2 text-white">Dados do Catequista</span>
+					</div>
+				</nav>
+
+				<br />
+
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<div class="col-sm-12 row">
+								<div class="col-sm-2">
+									<p:graphicImage url="assets/images/person-picture.png" width="100%" />
+								</div>
+								<div class="col-sm-10 row">
+
+									<div class="row">
+										<div class="col-sm-4">
+											<div>
+												<p:outputLabel value="Nome Completo" class="control-label fw-bold" />
+											</div>
+											<div>
+												<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.nomeCompleto}" class="control-label text-underline" />
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div>
+												<p:outputLabel value="Data de Nasc." class="control-label fw-bold" />
+											</div>
+											<div>
+												<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.dataNascimento}" class="control-label text-underline">
+													<f:convertDateTime pattern="dd.MM.yyyy" type="localDateTime" />
+												</p:outputLabel>
+											</div>
+										</div>
+										<div class="col-sm-5">
+											<div>
+												<p:outputLabel value="Email" class="control-label fw-bold" />
+											</div>
+											<div>
+												<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.email}" class="control-label text-underline" />
+											</div>
+										</div>
+									</div>
+									<p:divider type="dashed" />
+									<div class="row">
+										<div class="col-sm-4">
+											<div>
+												<p:outputLabel value="Contacto Pessoal 1" class="control-label fw-bold" />
+											</div>
+											<div>
+												<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.numeroTelefone1}" class="control-label text-underline" />
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div>
+												<p:outputLabel value="Contacto Pessoal 2" class="control-label fw-bold" />
+											</div>
+											<div>
+												<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.numeroTelefone2}" class="control-label text-underline" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Nome do Pai" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.nomePai}" class="control-label text-underline" />
+									</div>
+								</div>
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Nome da Mãe" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.nomeMae}" class="control-label text-underline" />
+									</div>
+								</div>
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Grupo" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idGrupoMovimento.nome}" class="control-label text-underline" />
+									</div>
+								</div>
+							</div>
+							<p:divider type="dashed" />
+							<div class="row">
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Nome Contacto Emergência" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.telefoneContactoEmergencia1}" class="control-label text-underline" />
+									</div>
+								</div>
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Contacto de Emergência" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.telefoneContactoEmergencia1}" class="control-label text-underline" />
+									</div>
+								</div>
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Grau de Parentesco" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idContactos.grau_parentesco_contacto_emergencia1}" class="control-label text-underline" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<p:divider align="left" type="dashed">
+									<b>Endereço</b>
+								</p:divider>
+							</div>
+							<div class="row">
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Rua" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idEndereco.rua}" class="control-label text-underline" />
+									</div>
+								</div>
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Bairro" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idEndereco.bairro}" class="control-label text-underline" />
+									</div>
+								</div>
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Município" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idEndereco.idMunicipio.nomeMunicipio}" class="control-label text-underline" />
+									</div>
+								</div>
+								<div class="col-sm">
+									<div>
+										<p:outputLabel value="Distrito" class="control-label fw-bold" />
+									</div>
+									<div>
+										<p:outputLabel value="#{catequeseCatequistaBean.entidade.idDadosPessoais.idEndereco.idDistrito.nomeDistrito}" class="control-label text-underline" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<br />
+
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<div class="row">
+								<h1>Sacramentos</h1>
+							</div>
+		
+							<div class="row">
+								<p:divider/>
+							</div>
+
+							<div class="row">
+								<p:dataTable var="item" value="#{catequeseCatequistaBean.entidade.catequistaSacramentos}">
+						            <p:column headerText="Nome Sacramento">
+						                <h:outputText value="#{item.idSacramento.nomeSacramento}"/>
+						            </p:column>
+						
+						            <p:column headerText="Local/Igreja" responsivePriority="3">
+						                <h:outputText value="#{item.paroquia}"/>
+						            </p:column>
+						
+						            <p:column headerText="Data" responsivePriority="2">
+						                <h:outputText value="#{item.dataConclusaoSacramento}">
+											<f:convertDateTime pattern="dd.MM.yyyy" type="localDateTime" />
+										</h:outputText>
+						            </p:column>
+						        </p:dataTable>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<br />
+				
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<p:commandLink class="button button-font btn btn-danger btn-icon btn-sm breadcrumb-button"
+								rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and !catequeseCatequistaBean.entidade.apagado}"
+								oncomplete="PF('confirmarExclusaoDialog').show();" update=":mainForm:confirmarExclusao">
+								<i class="entypo-trash" /> Eliminar
+                       		</p:commandLink>
+						</div>
+						<div class="col-sm-3">
+							<p:commandLink class="btn btn-default btn-icon  btn-sm breadcrumb-button" action="#{navegacaoPaginasCatequistaBean.verListaAtivos}" rendered="#{!catequeseCatequistaBean.entidade.novoRegisto and !catequeseCatequistaBean.entidade.apagado}" immediate="true">
+								<i class="pi pi-arrow-right" /> #{catequeseCatequistaBean.entidade.id == null ? 'Cancelar' : 'Voltar'}
+							</p:commandLink>
+						</div>
+					</div>
+				</div>
+
+				<p:confirmDialog width="40%" global="true" header="Confirmação de Exclusão de Catequista"
+					message="Deseja realmente excluir o registo do catequista '#{catequeseCatequistaBean.entidade.nomeCompleto}'?" id="confirmarExclusao"
+					widgetVar="confirmarExclusaoDialog">
+
+					<hr />
+
+					<div class="container">
+						<div class="row justify-content-md-center">
+							<div class="col-sm-3">
+								<p:commandLink class="btn btn-danger btn-icon btn-sm breadcrumb-button" action="#{catequeseCatequistaBean.excluir}"
+									oncomplete="PF('confirmarExclusaoDialog').hide();">
+									<i class="entypo-trash" /> Sim
+		                    	</p:commandLink>
+							</div>
+							<div class="col-sm-3">
+								<p:commandLink class="btn btn-default btn-icon btn-sm breadcrumb-button" oncomplete="PF('confirmarExclusaoDialog').hide();">
+									<i class="entypo-cancel" /> Não
+                    			</p:commandLink>
+							</div>
+						</div>
+					</div>
+				</p:confirmDialog>
+				
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+
+</ui:composition>
+</html>
+

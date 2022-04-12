@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../../template.xhtml">
+	<ui:define name="page_title">Lista de Inscriçōes de Catequistas Eliminadas</ui:define>
+	<ui:define name="page_breadcrumb_1">
+		<i class="fa fa-indent"></i> Catequese</ui:define>
+	<ui:define name="page_breadcrumb_2">
+		<i class="entypo-layout"></i>Catequista</ui:define>
+	<ui:define name="page_breadcrumb_3">
+		<i class="fa fa-list-alt"></i> Inscriçōes de Catequistas</ui:define>
+	<br />
+	<ui:define name="center_content">
+		<h:panelGroup id="grupoPrincipal">
+			<h:form id="mainForm">
+				<f:metadata>
+					<f:viewAction action="#{catequeseCatequistaIncricoesBean.carregarPaginaListarApagagos}" />
+				</f:metadata>
+				<p:messages id="messages" showDetail="false" closable="true" />
+				<nav class="navbar navbar-inverse" role="navigation">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#" style="font-size: 128%;">Lista de Inscriçōes de Catequistas Eliminadas do Sistema</a>
+					</div>
+				</nav>
+				<h2>Pesquisar Inscrição</h2>
+				<hr />
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-6">
+									<div>
+										<p:outputLabel for="@next" value="Nome do Catequista" class="control-label" />
+										<p:inputText class="form-control" style="width:100%" value="#{catequeseCatequistaIncricoesBean.filtro.nomeCompleto}" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div>
+										<p:outputLabel for="@next" value="Numero de Telefone" class="control-label" />
+										<p:inputText class="form-control" style="width:100%" value="#{catequeseCatequistaIncricoesBean.filtro.numeroTelefone}" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div>
+										<p:outputLabel for="@next" value="Estado da Inscrição" class="control-label" />
+										<p:selectOneMenu style="width:100%" dynamic="true" filter="true" filterMatchMode="startsWith" effect="fade"
+											value="#{catequeseCatequistaIncricoesBean.filtro.estado}">
+											<f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+											<f:selectItems value="#{beanUtil.estadosInscricao}" var="item" itemValue="#{item}" itemLabel="#{item.estado}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+							</div>
+
+							<br />
+							<div class="row">
+								<div class="col-sm-6">
+									<div>
+										<p:outputLabel value="Período de Inscrição" class="control-label" />
+										<div class="row">
+											<div class="col-sm-1">
+												<p:outputLabel value="De" for="@next" class="control-label" />
+											</div>
+											<div class="col-sm-5">
+												<p:datePicker id="dataInscricaoIncial" value="#{catequeseCatequistaIncricoesBean.filtro.dataInscricaoInicial}" mask="true" locale="de" monthNavigator="true"
+													yearNavigator="true" pattern="dd.MM.yyyy" />
+											</div>
+											<div class="col-sm-1">
+												<p:outputLabel value="À" for="@next" class="control-label" />
+											</div>
+											<div class="col-sm-5">
+												<p:datePicker id="dataInscricaoFinal" value="#{catequeseCatequistaIncricoesBean.filtro.dataInscricaoFinal}" mask="true" locale="de" monthNavigator="true"
+													yearNavigator="true" pattern="dd.MM.yyyy" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div>
+										<p:outputLabel for="@next" value="Pastoral" class="control-label" />
+										<p:selectOneMenu style="width:100%" filter="true" filterMatchMode="startsWith" effect="fade" converter="paroquiaPastoralConverter"
+											value="#{catequeseCatequistaIncricoesBean.filtro.pastoral}">
+											<f:selectItem value="#{null}" itemLabel="Selecione" />
+											<f:selectItems value="#{paroquiaPastoralBean.listarTodos}" var="item" itemValue="#{item}" itemLabel="#{item.nomePastoral}" />
+											<p:ajax update="grupoMovimento" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div>
+										<p:outputLabel for="@next" value="Grupo ou Movimento" class="control-label" />
+										<p:selectOneMenu style="width:100%" filter="true" filterMatchMode="startsWith" effect="fade" id="grupoMovimento" converter="paroquiaGrupoMovimentoConverter"
+											value="#{catequeseCatequistaIncricoesBean.filtro.grupoOuMovimento}">
+											<f:selectItem value="#{null}" itemLabel="Selecione" />
+											<f:selectItems var="item" itemValue="#{item}" itemLabel="#{item.nome}"
+												value="#{paroquiaGrupoMovimentoBean.listaPorPastoral(catequeseCatequistaIncricoesBean.filtro.pastoral.id)}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+							</div>
+							<br />
+							<div class="row">
+								<div class="col-sm-6">
+									<div>
+										<p:outputLabel value="Período de Remoção" class="control-label" />
+										<div class="row">
+											<div class="col-sm-1">
+												<p:outputLabel value="De" for="@next" class="control-label" />
+											</div>
+											<div class="col-sm-5">
+												<p:datePicker timeInput="true" value="#{catequeseCatequistaIncricoesBean.filtro.dataRemocaoInicial}" mask="true" locale="de" monthNavigator="true"
+													yearNavigator="true" pattern="dd.MM.yyyy" />
+											</div>
+											<div class="col-sm-1">
+												<p:outputLabel value="À" for="@next" class="control-label" />
+											</div>
+											<div class="col-sm-5">
+												<p:datePicker timeInput="true" value="#{catequeseCatequistaIncricoesBean.filtro.dataRemocaoFinal}" mask="true" locale="de" monthNavigator="true"
+													yearNavigator="true" pattern="dd.MM.yyyy" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br />
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="col-sm-3 float-right">
+										<p:commandLink update="datalist" class="btn btn-primary btn-icon btn-sm breadcrumb-button" action="#{catequeseCatequistaIncricoesBean.filtrar}">
+											<i class="entypo-search" /> Pesquisar
+                   						</p:commandLink>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<h:panelGroup id="painelBotoes">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-3">
+								<p:commandLink id="aprovarTodos" update="painelBotoes,datalist" disabled="#{empty catequeseCatequistaIncricoesBean.listaSelecionadosVO}"
+									class="btn btn-green btn-icon btn-sm breadcrumb-button" action="#{catequeseCatequistaIncricoesBean.recuperarVarios}">
+									<i class="pi pi-undo" /> Restaurar Selecionados
+                        		</p:commandLink>
+							</div>
+							<div class="col-sm-5">
+								<p:commandLink id="rejeitarTodos" disabled="#{empty catequeseCatequistaIncricoesBean.listaSelecionadosVO}" class="btn btn-danger btn-icon btn-sm breadcrumb-button"
+									oncomplete="PF('confirmarExclusaoDialog').show();" update=":mainForm:confirmarExclusao">
+									<i class="entypo-trash" /> Eliminar Permanentemente Selecionados
+                        		</p:commandLink>
+							</div>
+						</div>
+					</div>
+				</h:panelGroup>
+				<hr />
+
+				<p:dataTable id="datalist" value="#{catequeseCatequistaIncricoesBean.dataModel}" var="item" paginator="true" paginatorPosition="bottom" rows="10"
+					emptyMessage="Nenhuma inscrição encontrada" widgetVar="listar" selection="#{catequeseCatequistaIncricoesBean.listaSelecionadosVO}" rowKey="#{item.id}"
+					selectionPageOnly="false" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registo(s)" rowsPerPageTemplate="1, 5,10,20,40,50">
+
+					<p:ajax event="rowSelect" update="mainForm:painelBotoes" />
+					<p:ajax event="rowUnselect" update="mainForm:painelBotoes" />
+					<p:ajax event="rowSelectCheckbox" update="mainForm:painelBotoes" />
+					<p:ajax event="rowUnselectCheckbox" update="mainForm:painelBotoes" />
+
+					<p:column selectionMode="multiple" style="width:2%;text-align:center" />
+					<p:ajax event="toggleSelect" update="mainForm:painelBotoes" />
+
+					<p:column headerText="Nome" sortBy="#{item.nomeCompleto}" filterBy="#{item.nomeCompleto}" filterMatchMode="contains">
+						<h:outputText value="#{item.nomeCompleto}" />
+					</p:column>
+
+					<p:column headerText="Data de Inscrição" sortBy="#{item.dataInscricao}" filterBy="#{item.dataInscricao}" filterMatchMode="contains">
+						<h:outputText value="#{item.dataInscricao}">
+							<f:convertDateTime pattern="dd.MM.yyyy HH:mm" type="localDateTime" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Sacramentos" sortBy="#{item.sacramentos}" filterBy="#{item.sacramentos}" filterMatchMode="contains">
+						<h:outputText value="#{item.sacramentos}" />
+					</p:column>
+
+					<p:column headerText="Data de Remoção" sortBy="#{item.dataRemocao}" filterBy="#{item.dataRemocao}" filterMatchMode="contains">
+						<h:outputText value="#{item.dataRemocao}">
+							<f:convertDateTime pattern="dd.MM.yyyy HH:mm" type="localDateTime" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandLink class="btn btn-info btn-icon btn-xs" action="#{navegacaoPaginasCatequistaInscricaoBean.verFichaInscricoes(item.id)}">
+							<i class="entypo-info" /> Ver Ficha
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+
+				<p:confirmDialog width="40%" global="true" header="Confirmação de Exclusão da Inscrição"
+					message="Deseja realmente excluir a(s) inscrição/inscriçōes de '#{catequeseCatequistaIncricoesBean.getNomesCandidatos(catequeseCatequistaIncricoesBean.listaSelecionadosVO)}'?"
+					id="confirmarExclusao" widgetVar="confirmarExclusaoDialog">
+
+					<div class="container">
+						<div class="row justify-content-md-center">
+							<div class="col-sm-3">
+								<p:commandLink class="btn btn-danger btn-icon btn-sm breadcrumb-button" update="painelBotoes,datalist" action="#{catequeseCatequistaIncricoesBean.excluirPermanenteVarios}"
+									oncomplete="PF('confirmarExclusaoDialog').hide();">
+									<i class="entypo-trash" /> Sim
+		                    	</p:commandLink>
+							</div>
+							<div class="col-sm-3">
+								<p:commandLink class="btn btn-default btn-icon btn-sm breadcrumb-button" oncomplete="PF('confirmarExclusaoDialog').hide();">
+									<i class="entypo-cancel" /> Não
+                    			</p:commandLink>
+							</div>
+						</div>
+					</div>
+				</p:confirmDialog>
+
+				<a class="view-removed-element-list-link" href="lista-de-inscricoes-de-catequistas"
+					style="color: black !important; text-decoration: underline !important; font-size: 134% !important; float: right;"> <h:outputText
+						value="Voltar para Lista de Inscriçōes Disponíveis" />
+				</a>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>
+

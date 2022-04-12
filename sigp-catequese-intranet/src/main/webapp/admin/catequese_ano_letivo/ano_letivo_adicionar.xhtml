@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <p:dialog id="AdicionarDlg" closable="true" widgetVar="AdicionarDialog" modal="true" width="35%" resizable="false" appendTo="@(body)" header="#{catequeseAnoLetivoBean.entidade.novoRegisto ? 'Registar' : 'Editar'} Ano Letivo de Catequese">
+            <p:messages id="internalMessages" showDetail="false"/>
+            <h:form id="AdicionarForm" rendered="#{catequeseAnoLetivoBean.entidade != null}">
+            	<h:panelGrid  columns="1" styleClass="semBorda"  style="width: 100%">
+            		<h:panelGroup class="form-group col-md-12">
+						<p:outputLabel for="@next" value="Ano Catequese" class="control-label"/>
+						<p:inputMask class="form-control" id="ano" value="#{catequeseAnoLetivoBean.entidade.ano}" mask="9999"/>
+	                    <p:message for="ano" />
+                    </h:panelGroup>
+                    <h:panelGroup class="form-group col-md-12" rendered="#{!catequeseAnoLetivoBean.entidade.novoRegisto}">
+                   		<p:outputLabel for="@next" value="Estado" class="control-label"/>
+                        <p:selectOneMenu id="estado" value="#{catequeseAnoLetivoBean.entidade.estadoAnoLetivo}">
+                        	<f:selectItems value="#{beanUtil.estadosAnoLetivo}" var="item" itemValue="#{item}" itemLabel="#{item.value}"/>
+                    	</p:selectOneMenu> 
+                    </h:panelGroup>
+                    <h:panelGroup class="form-group col-md-12">
+                   		<p:outputLabel for="@next" value="Data de Inicio" class="control-label"/>
+                        <p:datePicker id="ano-inicio" value="#{catequeseAnoLetivoBean.entidade.dataInicio}" showIcon="true" showButtonBar="true" mask="true" locale="de" monthNavigator="true" pattern="dd.MM.yyyy" styleClass="#{catequeseAnoLetivoBean.styleClassForDataInicioSuperiorOuIgualDataFim()}"/>
+                        <p:message for="ano-inicio" />
+                    </h:panelGroup>
+                    <h:panelGroup class="form-group col-md-12">
+                    	<p:outputLabel for="@next" value="Data de Término" class="control-label"/>
+                        <p:datePicker  id="ano-termino" value="#{catequeseAnoLetivoBean.entidade.dataFim}" showIcon="true" showButtonBar="true" mask="true" locale="de" monthNavigator="true" pattern="dd.MM.yyyy" styleClass="#{catequeseAnoLetivoBean.styleClassForDataInicioSuperiorOuIgualDataFim()}"/>
+                        <p:message for="ano-termino" />
+                   	</h:panelGroup>
+            	</h:panelGrid>
+                <div class="modal-footer">
+                    <p:commandLink class="btn btn-green btn-icon btn-lg" action="#{catequeseAnoLetivoBean.gravar}" update="AdicionarForm">
+                        <i class="entypo-check"/> #{catequeseAnoLetivoBean.entidade.novoRegisto ? 'Registar' : 'Editar'}
+                    </p:commandLink>
+
+                    <p:commandLink immediate="true" class="btn btn-default btn-icon btn-lg" action="#{catequeseAnoLetivoBean.cancelarRegisto}" onclick="PF('AdicionarDialog').hide()">
+                        <i class="entypo-cancel"/> Fechar
+                    </p:commandLink>
+
+                    <p:commandLink rendered="#{!catequeseAnoLetivoBean.entidade.novoRegisto}" class="btn btn-danger btn-icon btn-lg" update=":AdicionarForm:confirmarExclusao"
+                                   oncomplete="PF('confirmarExclusaoDialog').show();">
+                        <i class="entypo-trash"/> Eliminar
+                    </p:commandLink>
+                </div>
+                <p:confirmDialog severity="none" class="modal-footer" width="33%" global="true" header="Confirmação de Exclusão de Ano Letivo"  message="Deseja realmente excluir o ano letivo '#{catequeseAnoLetivoBean.entidade.ano}'?" id="confirmarExclusao" widgetVar="confirmarExclusaoDialog">
+                    <p:commandLink class="btn btn-danger btn-icon btn-lg" action="#{catequeseAnoLetivoBean.excluir}" oncomplete="PF('AdicionarDialog').hide(); PF('confirmarExclusaoDialog').hide(); setTimeout(function(){$('[id$=messages]').hide(1);},4000);" update=":mainForm:messages,:formListar:datalist">
+                        <i class="entypo-trash"/> Sim
+                    </p:commandLink>
+
+                    <p:commandLink class="btn btn-default btn-icon btn-lg" oncomplete="PF('confirmarExclusaoDialog').hide();">
+                        <i class="entypo-cancel"/> Não
+                    </p:commandLink>
+                </p:confirmDialog>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
+

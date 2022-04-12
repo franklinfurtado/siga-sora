@@ -1,0 +1,108 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 9, 2021, 4:10:57 PM
+    Author     : franklinfurtado
+*/
+
+/* Alterar o tamanhho da letra dos nomes das colunas do p:datatable */
+.ui-datatable-tablewrapper{
+    font-size: 124% !important;
+}
+
+/* Alterar o tamanhho da letra do selector de total de elementos do p:datatable */
+.ui-paginator-rpp-options, .ui-paginator-current{
+    font-size: 133% !important;
+    font-family: cambria !important;
+}
+
+/*alterar o posicionamento na tela do p:autoComplete*/
+.ui-autocomplete{
+    position: unset!important;
+}
+
+/*alterar tamanha de letra do da textflied do ui-selectonemenu*/
+body .ui-selectonemenu-label{
+    height: 38px !important;
+}
+
+/*alterar tamanha de letra das opcoes de selecao do ui-selectonemenu*/
+.ui-selectonemenu-label .ui-inputfield .ui-corner-all {
+    font-size: 110% !important;
+}
+
+.ui-selectonemenu {
+	display: block !important;
+}
+
+/*alterar da textfield do p:datePicker*/
+.p-datepicker .ui-inputfield{
+    width: 100% !important;
+}
+
+.p-datepicker {
+	font-size: 110% !important;
+    width: 100% !important;
+}
+
+/*adicionar a linha inferior depois do titulo da modal*/
+.ui-dialog-titlebar{
+	border-bottom: 1px solid #e5e5e5 !important;
+}
+
+/*dar espaco entre a linha inferior depois do titulo da modal e o corpo da modal*/
+.ui-dialog-content{
+	padding-top: 2% !important;
+}
+
+.ui-selectonemenu, .ui-selectcheckboxmenu{
+	min-width: 100% !important;
+}
+
+.ui-selectcheckboxmenu-token {
+	height: 28px;
+}
+
+.ui-dataview-layout-options {
+	width: 5% !important;
+}
+
+/*
+ * alterar tamanho de letra dos links do menu esquerdo
+ */
+.menu-command-link {
+	text-decoration: none !important;
+	font-size: 190% !important;
+}
+
+/*
+ * alterar tamanho de letra dos input autocomplete
+ */
+.ui-autocomplete-input, .ui-autocomplete {
+	width: 100% !important;
+	font-size: 105% !important;
+}
+
+/*
+ * definir tamanho de letra dos elementos
+ */
+.default-font-family, .control-label, .ui-dialog-title, .form-control,
+	.ui-chkbox-label, .ui-panel-title, .ui-selectonemenu-item, .ui-chkbox .ui-chkbox-label,
+	.ui-selectonemenu-label, .ui-selectcheckboxmenu-items-wrapper
+	.ui-selectonemenu-items, .ui-autocomplete-panel {
+	font-size: 130% !important;
+}
+
+/*
+ * definir altura dos elementos
+ * o .ui-autocomplete-panel nao deve ter a altura a 100% por isso criou-se este conjunto a parte do de cima
+ */
+.default-font-family, .control-label, .ui-dialog-title, .form-control,
+	.ui-chkbox-label, .ui-panel-title, .ui-selectonemenu-item, .ui-chkbox .ui-chkbox-label,
+	.ui-selectonemenu-label, .ui-selectcheckboxmenu-items-wrapper
+	.ui-selectonemenu-items {
+	height: 100% !important;
+}

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="../../template.xhtml">
+        <ui:define name="page_title">Anos Letivo da Catequese</ui:define>
+        <ui:define name="page_breadcrumb_1"><i class="fa fa-indent"></i>Catequese</ui:define>
+        <ui:define name="page_breadcrumb_2"><i class="entypo-layout"></i>Ano Letivo da Catequese</ui:define>
+        <ui:define name="page_breadcrumb_3">Ano Letivo</ui:define>
+        <br/>
+        <ui:define name="center_content"> 
+            <h:panelGroup id="grupoPrincipal">
+                <h:form id="mainForm">
+                    <nav class="navbar navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="font-size: 128%;">Gerir Ano Letivo</a>
+                        </div>
+                    </nav>
+                    <p:messages id="messages" showDetail="false" closable="true" />
+                </h:form>
+                <ui:include src="ano_letivo_listar.xhtml"/>
+                <div class="col-md-12 painel-grafico" >
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-heading">
+                            <div class="panel-title" style="text-align: center; font-size: 116%;">Total de Catequistas e Catecumenos Por Pastoral</div>
+                        </div>
+                        <div class="panel-body">
+                            <!-- <p:barChart id="totalPorPastoral" model="#{catequeseAnoLetivoBean.graficoTotalCatqCatecPorAnoLetivo}"  /> --> 
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

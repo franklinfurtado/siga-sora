@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="../../template.xhtml">
+        <ui:define name="page_title">Lista de Catecumenos Inscritos</ui:define>
+        <ui:define name="page_breadcrumb_1"><i class="fa fa-indent"></i>Catequese</ui:define>
+        <ui:define name="page_breadcrumb_2"><i class="entypo-layout"></i>Catecumenos</ui:define>
+        <ui:define name="page_breadcrumb_3"><i class="fa fa-list-alt"></i>Inscriçōes de Catecumenos</ui:define>
+        <br/>
+        <ui:define name="center_content"> 
+            <h:panelGroup id="grupoPrincipal">
+                <h:form id="mainForm">
+                    <p:messages id="messages" showDetail="false" closable="true" />
+                    <nav class="navbar navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="font-size: 128%;">Lista de Catecumenos Inscritos no Sistema</a>
+                        </div>
+                    </nav>
+                    <h2>Pesquisar Catecumenos</h2>
+                    <hr/> 
+                    <p:commandLink class="button-font btn-lg btn-primary ff-large-button" action="pretty:catecumeno_inscricoes_adicionar">
+                        <i class="glyphicon glyphicon-plus" /> Nova Inscrição
+                    </p:commandLink>
+                    <br/><br/>
+                    
+                    <p:dataTable id="datalist" value="#{catequeseCatecumenoIncricoesBean.lista}" var="item"
+                                 paginator="true" paginatorPosition="bottom" rowKey="#{item.id}"
+                                 rows="10" emptyMessage="Nenhum catecumeno encontrado"
+                                 widgetVar="listar"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registo(s)"
+                                 rowsPerPageTemplate="5,10,20,40,50,100,{ShowAll|'Todos'}"
+                                 >
+
+                        <p:column headerText="Ano Letivo" style="width: 17%" sortBy="#{item.idAnoLetivo.ano}" filterBy="#{item.idAnoLetivo.ano}" filterMatchMode="contains">
+                            <h:outputText value="#{item.idAnoLetivo.ano}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Nome" style="width: 17%" sortBy="#{item.idDadosPessoais.nomeCompleto}" filterBy="#{item.idDadosPessoais.nomeCompleto}" filterMatchMode="contains">
+                            <h:outputText value="#{item.idDadosPessoais.nomeCompleto}"/>
+                        </p:column>
+
+                        <p:column headerText="Data de Nascimento" style="width: 17%" sortBy="#{item.idDadosPessoais.dataNascimento}" filterBy="#{item.idDadosPessoais.dataNascimento}" filterMatchMode="contains">
+                            <h:outputText value="#{item.idDadosPessoais.dataNascimento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Etapa" style="width: 17%" sortBy="#{item.idEtapaCatequese.nomeEtapa}" filterBy="#{item.idEtapaCatequese.nomeEtapa}" filterMatchMode="contains">
+                            <h:outputText value="#{item.idEtapaCatequese.nomeEtapa}"/>
+                        </p:column>
+
+                        <p:column headerText="Estado" style="width: 17%" sortBy="#{item.idInscricoesEstado.nomeEstado}" filterBy="#{item.idInscricoesEstado.nomeEstado}" filterMatchMode="contains">
+                            <h:outputText value="#{item.idInscricoesEstado.nomeEstado}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>
+

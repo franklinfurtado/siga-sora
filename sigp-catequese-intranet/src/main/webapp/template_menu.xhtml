@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition>
+        <h:form id="template_menu">
+            <ul id="main-menu" class="">
+                <li id="search">
+                    <form method="get" action="">
+                        <input type="text" name="q" class="search-input"/>
+                        <button type="submit">
+                            <i class="entypo-search"></i>
+                        </button>
+                    </form>
+                </li>
+
+                <li>
+                    <a class="ui-commandlink ui-widget menu-command-link" href="pastoral">
+                        <i class="entypo-gauge"/> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a class="ui-commandlink ui-widget menu-command-link" href="ano-letivo">
+                        <i class="fa-w"/> Anos Letivos
+                    </a>
+                </li>
+                <li>
+                    <a class="ui-commandlink ui-widget menu-command-link" href="pastoral">
+                        <i class="entypo-flow-tree"/> Centros de Catequese
+                    </a>
+                </li>
+                <li>
+                    <p:commandLink class="menu-command-link">
+                        <i class="entypo-user"/> Catequistas
+                    </p:commandLink>
+                    <ul>
+                        <li>
+		                    <a class="ui-commandlink ui-widget menu-command-link" href="pastoral">
+		                        <i class="pi pi-chart-bar"/> Estatísticas
+		                    </a>
+                        </li>
+                        <li> 
+		                    <a class="ui-commandlink ui-widget menu-command-link" href="lista-de-catequistas">
+		                        <i class="entypo-search"/> Gerir Catequistas
+		                    </a>
+                        </li>
+                        <li> 
+		                    <a class="ui-commandlink ui-widget menu-command-link" href="lista-de-inscricoes-de-catequistas">
+		                        <i class="entypo-user-add"/> Inscriçōes de Catequistas
+		                    </a>
+                        </li>
+                    </ul>
+                </li>
+                <li> 
+                    <p:commandLink class="menu-command-link" >
+                        <i class="entypo-user"/> Catecumenos
+                    </p:commandLink>
+                    <ul>
+                        <li> 
+		                    <a class="ui-commandlink ui-widget menu-command-link" href="pastoral">
+		                        <i class="glyphicon glyphicon-stats"/> Estatísticas
+		                    </a>
+                        </li>
+                        <li> 
+		                    <a class="ui-commandlink ui-widget menu-command-link" href="catecumeno_home">
+		                        <i class="glyphicon glyphicon-search"/> Gerir Catecumenos
+		                    </a>
+                        </li>
+                        <li> 
+		                    <a class="ui-commandlink ui-widget menu-command-link" href="catecumeno_inscricoes">
+		                        <i class="entypo-user-add"/> Inscriçōes de Catecumenos
+		                    </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="ui-commandlink ui-widget menu-command-link" href="grupo-e-movimento">
+                        <i class="entypo-layout"/> Grupos e Movimentos
+                    </a>
+                </li>
+                <li>
+                    <a class="ui-commandlink ui-widget menu-command-link" href="pastoral">
+                        <i class="entypo-layout"/> Pastorais
+                    </a>
+                </li>
+                <li> 
+                    <p:commandLink class="menu-command-link" >
+                        <i class="fa fa-cogs"/> Configurações Catequese
+                    </p:commandLink>
+                    <ul>
+                        <li> 
+		                    <a class="ui-commandlink ui-widget menu-command-link" href="horarios-de-catequese">
+		                        <i class="entypo-back-in-time"/> Horário de Catequese
+		                    </a>
+                        </li>
+                        <li>
+		                    <a class="ui-commandlink ui-widget menu-command-link" href="etapas-da-catequese">
+		                        <i class="entypo-flow-cascade"/> Etapas da Catequese
+		                    </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </h:form>
+    </ui:composition>
+</html>
+

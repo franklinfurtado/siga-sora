@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="../../template.xhtml">
+        <ui:define name="page_title">Lista de Catecumenos</ui:define>
+        <ui:define name="page_breadcrumb_1"><i class="fa fa-indent"></i>Catequese</ui:define>
+        <ui:define name="page_breadcrumb_2"><i class="entypo-layout"></i>Catecumenos</ui:define>
+        <ui:define name="page_breadcrumb_3">Lista de Catecumenos</ui:define>
+        <br/>
+        <ui:define name="center_content"> 
+            <h:panelGroup id="grupoPrincipal">
+                <h:form id="mainForm">
+                    <nav class="navbar navbar-inverse" role="navigation">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="font-size: 128%;">Lista de Catecumenos Registados no Sistema</a>
+                        </div>
+                    </nav>
+                    <p:messages id="messages" showDetail="false" closable="true" />
+                </h:form>
+                <ui:include src="catecumeno_listar.xhtml"/>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

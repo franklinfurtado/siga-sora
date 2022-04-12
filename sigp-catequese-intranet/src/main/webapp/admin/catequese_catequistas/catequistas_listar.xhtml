@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../../template.xhtml">
+	<ui:define name="page_title">Gerir Catequistas Registados no Sitema</ui:define>
+	<ui:define name="page_breadcrumb_1">
+		<i class="fa fa-indent"></i> Catequese</ui:define>
+	<ui:define name="page_breadcrumb_2">
+		<i class="entypo-layout"></i>Catequista</ui:define>
+	<ui:define name="page_breadcrumb_3">
+		<i class="entypo-search"></i> Gerir Catequistas</ui:define>
+	<br />
+	<ui:define name="center_content">
+		<h:panelGroup id="grupoPrincipal">
+			<h:form id="mainForm">
+
+				<f:metadata>
+					<f:viewAction action="#{catequeseCatequistaBean.carregarPaginaListarAtivos}" />
+				</f:metadata>
+
+				<nav class="navbar navbar-inverse" role="navigation">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#" style="font-size: 128%;">Lista de Catequistas Registados no Sistema</a>
+					</div>
+				</nav>
+				<h2>Pesquisar Catequistas</h2>
+				<hr />
+				<div class="card">
+					<div class="card-body">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-3">
+									<div>
+										<p:outputLabel for="@next" value="Código de Catequista" class="control-label" />
+										<p:inputText class="form-control" style="width:100%" value="#{catequeseCatequistaBean.filtro.codigo}" />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div>
+										<p:outputLabel for="@next" value="Nome do Catequista" class="control-label" />
+										<p:inputText class="form-control" style="width:100%" value="#{catequeseCatequistaBean.filtro.nomeCompleto}" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div>
+										<p:outputLabel for="@next" value="Numero de Telefone" class="control-label" />
+										<p:inputText class="form-control" style="width:100%" value="#{catequeseCatequistaBean.filtro.numeroTelefone}" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<br />
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-3">
+									<div>
+										<p:outputLabel for="@next" value="Pastoral" class="control-label" />
+										<p:selectOneMenu style="width:100%" filter="true" filterMatchMode="startsWith" effect="fade" converter="paroquiaPastoralConverter"
+											value="#{catequeseCatequistaBean.filtro.pastoral}">
+											<f:selectItem value="#{null}" itemLabel="Selecione" />
+											<f:selectItems value="#{paroquiaPastoralBean.listarTodos}" var="item" itemValue="#{item}" itemLabel="#{item.nomePastoral}" />
+											<p:ajax update="grupoMovimento" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div>
+										<p:outputLabel for="@next" value="Grupo ou Movimento" class="control-label" />
+										<p:selectCheckboxMenu value="#{catequeseCatequistaBean.filtro.gruposOuMovimentos}" style="min-width: 15rem" multiple="true" filter="true"
+											filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250" id="grupoMovimento">
+											<f:selectItems var="item" itemValue="#{item.nome}" itemLabel="#{item.nome}"
+												value="#{paroquiaGrupoMovimentoBean.listaPorPastoral(catequeseCatequistaBean.filtro.pastoral.id)}" />
+										</p:selectCheckboxMenu>
+									</div>
+								</div>
+							</div>
+						</div>
+						<br />
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="col-sm-3 float-right">
+									<p:commandLink update="datalist" class="btn btn-primary btn-icon btn-sm breadcrumb-button" action="#{catequeseCatequistaBean.filtrar}">
+										<i class="entypo-search" /> Pesquisar
+		                   			</p:commandLink>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<h:panelGroup id="painelBotoes">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-3">
+								<p:commandLink class="btn btn-primary btn-icon btn-sm breadcrumb-button" action="#{navegacaoPaginasCatequistaBean.verFichaRegistoNovo}">
+									<i class="entypo-user-add" /> + Novo Catequista
+	                    			</p:commandLink>
+							</div>
+						</div>
+					</div>
+				</h:panelGroup>
+				<hr />
+
+				<p:dataTable id="datalist" value="#{catequeseCatequistaBean.dataModel}" var="item" paginator="true" paginatorPosition="bottom" rows="10"
+					emptyMessage="Nenhum catequista encontrado" widgetVar="listar" stripedRows="true" rowKey="#{item.id}"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registo(s)" rowsPerPageTemplate="1,5,10,20,40,50">
+
+					<f:facet name="header">
+						<div class="p-d-flex p-jc-between p-ai-center">
+							<div>
+								<p:commandButton id="toggler" type="button" value="Selecionar as colunas para mostrar na tabela" icon="pi pi-align-justify" />
+								<p:columnToggler datasource="datalist" trigger="toggler" />
+							</div>
+						</div>
+					</f:facet>
+
+					<p:column headerText="Fotografia" styleClass="ui-helper-hidden">
+						<p:graphicImage name="#{item.codigoCatequista}" styleClass="product-image" />
+					</p:column>
+
+					<p:column headerText="Código" sortBy="#{item.codigoCatequista}" filterBy="#{item.codigoCatequista}" filterMatchMode="contains">
+						<h:outputText value="#{item.codigoCatequista}" />
+					</p:column>
+
+					<p:column headerText="Nome" sortBy="#{item.nomeCompleto}" filterBy="#{item.nomeCompleto}" filterMatchMode="contains">
+						<h:outputText value="#{item.nomeCompleto}" />
+					</p:column>
+
+					<p:column headerText="Telefone" sortBy="#{item.numeroTelefone1}" filterBy="#{item.numeroTelefone1}" filterMatchMode="contains">
+						<h:outputText value="#{item.numeroTelefone1}" />
+					</p:column>
+
+					<p:column headerText="Grupo" styleClass="ui-helper-hidden" sortBy="#{item.grupoMovimento}" filterBy="#{item.grupoMovimento}" filterMatchMode="contains">
+						<h:outputText value="#{item.grupoMovimento}" />
+					</p:column>
+
+					<p:column headerText="Sacramentos" styleClass="ui-helper-hidden" sortBy="#{item.sacramentos}" filterBy="#{item.sacramentos}" filterMatchMode="contains">
+						<h:outputText value="#{item.sacramentos}" />
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandLink class="btn btn-info btn-icon btn-xs" action="#{navegacaoPaginasCatequistaBean.verFicha(item.id)}">
+							<i class="entypo-info" /> Ver Ficha
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+
+				<a class="view-removed-element-list-link" href="lista--de-catequistas-eliminados"
+					style="color: red !important; text-decoration: underline !important; font-size: 134% !important; float: right;"> <h:outputText
+						value="Ver Lista de Catequistas Eliminados" />
+				</a>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>
+

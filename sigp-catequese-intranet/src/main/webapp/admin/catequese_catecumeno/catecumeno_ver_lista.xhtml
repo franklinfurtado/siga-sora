@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="../../template.xhtml">
+        <ui:define name="page_title">Lista de Catecumeno Por #{catequeseCatecumenoPesquisa.descricaoPesquisa}</ui:define>
+        <hr/>
+        <br/>
+        <ui:define name="center_content"> 
+
+            <h:form id="formListarCatequistasPesquisa">
+                <h2>#{catequeseCatecumenoPesquisa.descricaoPesquisa}: #{catequeseCatecumenoPesquisa.nome}</h2>
+                <hr/>
+                <p:dataTable id="datalist" value="#{catequeseCatecumenoPesquisa.listaCatecumenos}" var="item"
+                             paginator="true" paginatorPosition="bottom" rowKey="#{item.idCatecumeno}"
+                             rows="10" emptyMessage="Nenhum catequista encontrado"
+                             widgetVar="catequistaListar"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registo(s)"
+                             rowsPerPageTemplate="5,10,20,40,50,100,{ShowAll|'Todos'}"
+                             >
+
+                    <p:column sortBy="#{item.idDadosPessoais.nome}" filterBy="#{item.idDadosPessoais.nome}" filterMatchMode="contains" headerText="Nome Catequista" style="width: 20%">
+                        <h:outputText value="#{item.idDadosPessoais.nome}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.idDadosPessoais.idContactos.numeroTelefone1}" filterBy="#{item.idDadosPessoais.idContactos.numeroTelefone1}" filterMatchMode="contains" headerText="Num. Telefone" style="width: 20%">
+                        <h:outputText value="#{item.idDadosPessoais.idContactos.numeroTelefone1}"/>
+                    </p:column>
+
+                    <p:column style="width: 30%;text-align: center" headerText="Opções">
+
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

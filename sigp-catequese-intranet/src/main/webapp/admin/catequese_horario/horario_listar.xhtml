@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition>
+        <h:panelGroup>
+            <h2>Pesquisar Horários de Catequese</h2>
+            <hr/> 
+            <h:form id="formListar">
+                <p:commandLink class="button-font btn-lg btn-primary ff-large-button" update=":AdicionarDlg" oncomplete="PF('AdicionarDialog').show();"
+                               action="#{catequeseHorarioBean.prepararNovoRegisto}">
+                    <i class="glyphicon glyphicon-plus" /> Novo Horário
+                </p:commandLink>
+                <br/><br/>
+
+                <p:dataTable id="datalist" value="#{catequeseHorarioBean.listarTodos}" var="item"
+                             paginator="true" paginatorPosition="bottom" rowKey="#{item.id}"
+                             rows="10" emptyMessage="Nenhum horário encontrado"
+                             widgetVar="pastoralListar"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registo(s)"
+                             rowsPerPageTemplate="5,10,20,40,50,100,{ShowAll|'Todos'}"
+                             >
+                    
+                    <p:column headerText="Descrição Horário" style="width: 17%" sortBy="#{item.nomePeriodo}" filterBy="#{item.nomePeriodo}" filterMatchMode="contains">
+                        <h:outputText value="#{item.nomePeriodo}"/>
+                    </p:column>
+
+                    <p:column headerText="Dia Semana" style="width: 10%" sortBy="#{item.diaSemana}" filterBy="#{item.diaSemana}" filterMatchMode="contains">
+                        <h:outputText value="#{item.diaSemana.value}"/>
+                    </p:column>
+
+                    <p:column headerText="Hora de Início" style="width: 10%;text-align: center;" sortBy="#{item.horaInicio}" filterBy="#{item.horaInicio}" filterMatchMode="contains">
+                        <h:outputText value="#{item.horaInicio}">
+                            <f:convertDateTime pattern="HH:mm" type="localTime"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Hora de Fim" style="width: 10%;text-align: center;" sortBy="#{item.horaTermino}" filterBy="#{item.horaTermino}" filterMatchMode="contains">
+                        <h:outputText value="#{item.horaTermino}">
+                            <f:convertDateTime pattern="HH:mm" type="localTime"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Opções" style="width: 17%;text-align: center">
+                        <p:commandLink class="btn btn-orange btn-icon btn-xs" update=":AdicionarDlg" oncomplete="PF('AdicionarDialog').show();">
+                            <i class="entypo-pencil" /> Editar
+                            <f:setPropertyActionListener value="#{item}" target="#{catequeseHorarioBean.entidade}" />
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <h:panelGroup>
+                <ui:include src="horario_adicionar.xhtml"/>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+</html>
+
